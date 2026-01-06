@@ -1,4 +1,6 @@
 import './styles/main.css';
+// @ts-ignore -- Vite handles '?raw' HTML imports at build time
+import template from './templates/form_template.html?raw';
 
 // TODO: Implementovat aplikaci pro správu kontaktů
 //
@@ -16,16 +18,7 @@ console.log('Vanilla TypeScript frontend připraven k implementaci!');
 const app = document.getElementById('app');
 
 if (app) {
-  app.innerHTML = `
-    <h1>Contact Manager</h1>
-    <form id="contact-form">
-      <input type="text" id="name" placeholder="Name" required />
-      <input type="email" id="email" placeholder="Email" required />
-      <button type="submit">Add Contact</button>
-    </form>
-    <div id="contact-list">
-      <p>No contacts yet...</p>
-    </div>
-  `;
+  app.innerHTML = template;
+
 }
 
