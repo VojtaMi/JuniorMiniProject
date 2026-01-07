@@ -5,30 +5,44 @@ import 'intl-tel-input/build/css/intlTelInput.css'; // phone library plugin CSS
 
 document.addEventListener('DOMContentLoaded', () => {
   const input = document.querySelector<HTMLInputElement>('#phone');
-  const errorMsg = document.querySelector('#phone-error');
+  if (!input) return;
 
-  if (input) {
-    const iti = intlTelInput(input, {
-      initialCountry: 'cz',
-      loadUtils: () => import('intl-tel-input/utils'),
+  const errorMsg =
+    input.nextElementSibling instanceof HTMLElement &&
+    input.nextElementSibling.classList.contains('error')
+      ? (input.nextElementSibling as HTMLElement)
+      : input.closest('.field')?.querySelector<HTMLElement>('.error');
+
+  const iti = intlTelInput(input, {
+    initialCountry: 'cz',
+    loadUtils: () => import('intl-tel-input/utils'),
+  });
+
+  let errorShown = false; // Track if error has been displayed
+
+  const updateError = () => {
+    const isValid = iti.isValidNumber();
+    if (errorMsg) {
+      errorMsg.textContent = isValid ? '' : 'Please enter a valid phone number';
+    }
+    errorShown = !isValid; // Update flag
+  };
+
+  iti.promise.then(() => {
+    // Validate on blur
+    input.addEventListener('blur', updateError);
+
+    // Validate on country change
+    input.addEventListener('countrychange', updateError);
+
+    // Validate on input only if error was shown before
+    let t: number | undefined;
+    input.addEventListener('input', () => {
+      if (!errorShown) return; // Skip until error triggered
+      clearTimeout(t);
+      t = window.setTimeout(updateError, 250);
     });
-
-    iti.promise.then(() => {
-      input.addEventListener('blur', () => {
-        const isValid = iti.isValidNumber();
-        if (errorMsg) {
-          errorMsg.textContent = isValid ? '' : 'Please enter a valid phone number';
-        }
-      });
-
-      input.addEventListener('countrychange', () => {
-        const isValid = iti.isValidNumber();
-        if (errorMsg) {
-          errorMsg.textContent = isValid ? '' : 'Please enter a valid phone number';
-        }
-      });
-    });
-  }
+  });
 });
 
 
