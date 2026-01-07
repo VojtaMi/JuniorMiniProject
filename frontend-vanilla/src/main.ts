@@ -3,15 +3,34 @@ import intlTelInput from 'intl-tel-input';
 import 'intl-tel-input/build/css/intlTelInput.css'; // phone library plugin CSS
 
 
-const input = document.querySelector<HTMLInputElement>('#phone');
-if (input) {
-  const iti = intlTelInput(input, {
-    initialCountry: 'cz',
-    loadUtils: () => import('intl-tel-input/utils'),
-  });
-  // Optionally access iti methods
-  // console.log(iti.getNumber());
-}
+document.addEventListener('DOMContentLoaded', () => {
+  const input = document.querySelector<HTMLInputElement>('#phone');
+  const errorMsg = document.querySelector('#phone-error');
+
+  if (input) {
+    const iti = intlTelInput(input, {
+      initialCountry: 'cz',
+      loadUtils: () => import('intl-tel-input/utils'),
+    });
+
+    iti.promise.then(() => {
+      input.addEventListener('blur', () => {
+        const isValid = iti.isValidNumber();
+        if (errorMsg) {
+          errorMsg.textContent = isValid ? '' : 'Please enter a valid phone number';
+        }
+      });
+
+      input.addEventListener('countrychange', () => {
+        const isValid = iti.isValidNumber();
+        if (errorMsg) {
+          errorMsg.textContent = isValid ? '' : 'Please enter a valid phone number';
+        }
+      });
+    });
+  }
+});
+
 
 
 // TODO: Implementovat aplikaci pro správu kontaktů
