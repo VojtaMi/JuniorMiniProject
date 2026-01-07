@@ -4,18 +4,24 @@ import 'intl-tel-input/build/css/intlTelInput.css'; // phone library plugin CSS
 
 
 
+// Wait until the DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
+  // Get the phone input element
   const input = document.querySelector<HTMLInputElement>('#phone');
   if (!input) return;
 
+  // Find the error message element for this input
   const errorMsg = getErrorElement(input);
+
+  // Initialize intl-tel-input for phone validation
   const iti = intlTelInput(input, {
     initialCountry: 'cz',
     loadUtils: () => import('intl-tel-input/utils'),
   });
 
-  let errorShown = false;
+  let errorShown = false; // Track if an error is currently displayed
 
+  // Update error message based on validity
   const updateError = () => {
     const isValid = iti.isValidNumber();
     if (errorMsg) {
@@ -24,28 +30,27 @@ document.addEventListener('DOMContentLoaded', () => {
     errorShown = !isValid;
   };
 
+  // Attach validation events after plugin is ready
   iti.promise.then(() => {
-    input.addEventListener('blur', updateError);
-    input.addEventListener('countrychange', updateError);
-    input.addEventListener('input', debounce(() => {if (errorShown) updateError();}));
+    input.addEventListener('blur', updateError); // Validate on blur
+    input.addEventListener('countrychange', updateError); // Validate on country change
+    input.addEventListener('input', debounce(() => {
+      if (errorShown) updateError(); // Validate on input only if error was shown
+    }));
   });
 });
 
-// Helpers
 
-// reusable function that returns an error element of general input field
+// -------------------- Helpers --------------------
+
+// Find the error element inside the closest wrapper
 function getErrorElement(input: HTMLInputElement): HTMLElement | null {
-  const next = input.nextElementSibling;
-  if (next instanceof HTMLElement && next.classList.contains('error')) {
-    return next;
-  }
-
-  const field = input.closest('.field');
-  const el = field?.querySelector('.error') ?? null;
+  const wrapper = input.closest('.form-group');
+  const el = wrapper?.querySelector('.error') ?? null;
   return el instanceof HTMLElement ? el : null;
 }
 
-// 
+// Debounce utility to delay validation while typing
 function debounce<T extends (...args: any[]) => void>(fn: T, delay = 300) {
   let timer: number | undefined;
   return (...args: Parameters<T>) => {
@@ -53,6 +58,7 @@ function debounce<T extends (...args: any[]) => void>(fn: T, delay = 300) {
     timer = window.setTimeout(() => fn(...args), delay);
   };
 }
+
 
 
 
