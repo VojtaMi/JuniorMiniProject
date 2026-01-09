@@ -57,7 +57,6 @@
           <p id="phone-error" class="error" role="alert" aria-live="polite"></p>
         </div>
 
-
         <!-- Note -->
         <div class="form-group">
           <label for="note">Note</label>
@@ -75,6 +74,7 @@
             <input type="text" id="street" name="street" autocomplete="street-address" required />
 
             <label for="houseNumber">House number</label>
+            <!-- the pattern is a basic check, does not guarantee 100% correct input (ex. 12a, 12aa passes too) -->
             <input type="text" id="houseNumber" name="houseNumber" inputmode="text"
               pattern="^[0-9]+([\/\-]?[0-9A-Za-z]+)?$" title="Examples: 123, 123/7, 123a" required />
 
