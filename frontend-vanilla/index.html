@@ -28,7 +28,8 @@
         <!-- Email -->
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="john@example.com" autocomplete="email" required />
+          <input type="email" id="email" name="email" placeholder="john@example.com" autocomplete="email" required aria-describedby="email-error"/>
+          <p id="email-error" class="error" role="alert" aria-live="polite"></p>
         </div>
 
         <!-- Gender -->

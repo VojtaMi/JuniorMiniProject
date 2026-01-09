@@ -1,11 +1,13 @@
 import './styles/main.css';
 import initPhone from './initFields/phone';
+import initEmail from './initFields/email';
 
 
 
 // Wait until the DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-  const phoneCtrl = initPhone();
+  const phoneInput = initPhone();
+  const emailInput = initEmail();
 });
 
 
