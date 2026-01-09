@@ -51,6 +51,7 @@ function getErrorElement(input: HTMLInputElement): HTMLElement | null {
 }
 
 // Debounce utility to delay validation while typing
+// MS Copilot generated, works as expected, but I do not understand it fully yet
 function debounce<T extends (...args: any[]) => void>(fn: T, delay = 300) {
   let timer: number | undefined;
   return (...args: Parameters<T>) => {
