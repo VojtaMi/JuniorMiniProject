@@ -1,7 +1,9 @@
 import './styles/main.css';
 import initPhone from './initFields/phone';
 import initEmail from './initFields/email';
-import {initFirstName, initLastName} from './initFields/name';
+import initGender from './initFields/gender';
+import {initFirstName, initLastName, initCity, initStreet} from './initFields/notEmpty';
+import initHouseNumber from './initFields/houseNumber';
 import submitContact from './submit'
 
 
@@ -10,11 +12,15 @@ import submitContact from './submit'
 document.addEventListener('DOMContentLoaded', () => {
   const firstNameAdapter = initFirstName();
   const lastNameAdapter = initLastName();
-  const phoneAdapter = initPhone();
   const emailAdapter = initEmail();
+  const genderAdapter = initGender();
+  const phoneAdapter = initPhone();
+  const cityAdapter = initCity();
+  const streetAdapter = initStreet();
+  const houseNumber = initHouseNumber();
 
   // const apiEndpoint = 'http://localhost:3333/api/contacts',
-  submitContact(firstNameAdapter, lastNameAdapter, phoneAdapter,emailAdapter);
+  submitContact(firstNameAdapter, lastNameAdapter,emailAdapter, genderAdapter, phoneAdapter);
 });
 
 

@@ -9,7 +9,7 @@ const nonEmptyNameSchema = z
   .trim()
   .min(1, 'This field is required');
 
-export function initNameField(selector: string): FieldAdapter {
+export function initNotEmptyField(selector: string): FieldAdapter {
   const input = document.querySelector<HTMLInputElement>(selector);
 
   if (!input) {
@@ -58,8 +58,14 @@ export function initNameField(selector: string): FieldAdapter {
 
 // Convenience wrappers
 export function initFirstName(): FieldAdapter {
-  return initNameField('#firstName');
+  return initNotEmptyField('#firstName');
 }
 export function initLastName(): FieldAdapter {
-  return initNameField('#lastName');
+  return initNotEmptyField('#lastName');
+}
+export function initCity(): FieldAdapter {
+  return initNotEmptyField('#city');
+}
+export function initStreet(): FieldAdapter {
+  return initNotEmptyField('#street');
 }
