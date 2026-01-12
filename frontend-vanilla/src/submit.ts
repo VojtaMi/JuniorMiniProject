@@ -4,7 +4,7 @@ function allInputsvalid(fields: FieldAdapter[]): boolean{
     return fields.every(f => f.isValid());
 }
 
-export default function submitContact(email: FieldAdapter, phone: FieldAdapter) {
+export default function submitContact(firstName: FieldAdapter,lastName: FieldAdapter, email: FieldAdapter, phone: FieldAdapter) {
   const form = document.querySelector('#contact-form') as HTMLFormElement | null;
 
   if (!form) {
@@ -12,7 +12,7 @@ export default function submitContact(email: FieldAdapter, phone: FieldAdapter) 
     return;
   }
 
-  const fields =  [email, phone];
+  const fields =  [firstName,lastName, email, phone];
   form.addEventListener('submit', (e) => {
     e.preventDefault(); // prevent page reload
     if (allInputsvalid(fields)){

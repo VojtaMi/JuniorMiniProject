@@ -1,17 +1,20 @@
 import './styles/main.css';
 import initPhone from './initFields/phone';
 import initEmail from './initFields/email';
+import {initFirstName, initLastName} from './initFields/name';
 import submitContact from './submit'
 
 
 
 // Wait until the DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
+  const firstNameAdapter = initFirstName();
+  const lastNameAdapter = initLastName();
   const phoneAdapter = initPhone();
   const emailAdapter = initEmail();
 
   // const apiEndpoint = 'http://localhost:3333/api/contacts',
-  submitContact(phoneAdapter,emailAdapter);
+  submitContact(firstNameAdapter, lastNameAdapter, phoneAdapter,emailAdapter);
 });
 
 

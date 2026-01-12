@@ -19,10 +19,11 @@
         <!-- Name and Surname -->
         <div class="form-group">
           <label for="firstName">First Name</label>
-          <input type="text" id="firstName" name="firstName" placeholder="John" autocomplete="given-name" required />
-
+          <input type="text" id="firstName" name="firstName" placeholder="John" autocomplete="given-name" required aria-describedby="firstName-error" />
+          <p id="firstName-error" class="error" role="alert" aria-live="polite"></p>
           <label for="lastName">Last Name</label>
-          <input type="text" id="lastName" name="lastName" placeholder="Doe" autocomplete="family-name" required />
+          <input type="text" id="lastName" name="lastName" placeholder="Doe" autocomplete="family-name" required aria-describedby="lastName-error"/>
+          <p id="lastName-error" class="error" role="alert" aria-live="polite"></p>
         </div>
 
         <!-- Email -->
