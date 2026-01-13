@@ -3,12 +3,11 @@ import { z } from 'zod';
 import { getErrorElement, debounce } from '../helpers';
 import type { FieldAdapter } from './types';
 
-const zipCodeRegex = /^\d{3}[\s/-]?\d{2}$/;
+const zipCodeRegex = /^(\d{3}[\s/-]?\d{2})?$/;
 
 const zipCodeSchema = z
   .string()
   .trim()
-  .min(1, 'ZIP code is required')
   .regex(zipCodeRegex, 'Use formats like "407 50" or "40750"');
 
 const normalizeZip = (zipInput: string) => zipInput.replace(/\D+/g, "");

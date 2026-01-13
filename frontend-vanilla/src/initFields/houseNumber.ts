@@ -5,12 +5,11 @@ import type { FieldAdapter } from './types';
 
 // start digits, optional (sep + digits + optional letter)
 // for czech formats like 123, 123/2a, 123/1
-const houseNumberRegex = /^\d+(?:[ /-]\d+[A-Za-z]?)?$/;
+const houseNumberRegex = /^(\d+(?:[ /-]\d+[A-Za-z]?)?)?$/;
 
 const houseNumberSchema = z
   .string()
   .trim()
-  .min(1, 'House number is required')
   .regex(houseNumberRegex, 'Use formats like 123, 123/7, 123-7a');
 
 export default function initHouseNumber(): FieldAdapter {
@@ -18,7 +17,7 @@ export default function initHouseNumber(): FieldAdapter {
 
   if (!input) {
     console.warn('House number input (#houseNumber) not found.');
-    return { isValid: () => false, getValue: () => '' };
+    return { isValid: () => true, getValue: () => '' };
   }
 
   const errorEl = getErrorElement(input);
