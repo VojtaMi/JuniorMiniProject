@@ -63,9 +63,3 @@ export function initFirstName(): FieldAdapter {
 export function initLastName(): FieldAdapter {
   return initNotEmptyField('#lastName');
 }
-export function initCity(): FieldAdapter {
-  return initNotEmptyField('#city');
-}
-export function initStreet(): FieldAdapter {
-  return initNotEmptyField('#street');
-}
