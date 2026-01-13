@@ -6,12 +6,11 @@ import 'intl-tel-input/build/css/intlTelInput.css'; // phone library plugin CSS
 export default function initPhone(): FieldAdapter {
   // Get the phone input element
   const input = document.querySelector<HTMLInputElement>('#phone');
-  
-if (!input) {
-    // Return a safe adapter (non-null) to avoid null checks downstream
+
+  if (!input) {
     console.warn('Phone input (#phone) not found.');
     return {
-      isValid: () => false,
+      isValid: () => true,
       getValue: () => "",
     };
   }
@@ -26,12 +25,12 @@ if (!input) {
   });
 
   let errorShown = false; // Track if an error is currently displayed
-
+  const isEmpty = () => input.value.trim() === ''; 
   // Update error message based on validity
   const updateError = () => {
-    const isValid = iti.isValidNumber();
+    const isValid = iti.isValidNumber() || isEmpty();
     if (errorMsg) {
-      errorMsg.textContent = isValid ? '' : 'Please enter a valid phone number';
+      errorMsg.textContent = isValid ? '' : 'Phone number format is invalid (either correct it or remove it)';
     }
     errorShown = !isValid;
   };
@@ -48,8 +47,8 @@ if (!input) {
   });
 
 
- 
- const isValid = () => (iti.isValidNumber() ?? false);
+
+  const isValid = () => (iti.isValidNumber() || isEmpty());
   const getValue = () => {
     const num = iti.getNumber();          // returns "" when empty/invalid
     const valid = iti.isValidNumber() ?? false;
