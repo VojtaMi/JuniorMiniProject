@@ -6,7 +6,7 @@ export default function initGenderField(): FieldAdapter {
     if (!inputs.length) {
         console.warn("Gender radio buttons not found.");
         return {
-            isValid: () => false,
+            isValid: () => true,
             getValue: () => '',
         };
     }
