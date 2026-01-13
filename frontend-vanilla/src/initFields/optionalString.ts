@@ -1,7 +1,7 @@
 import type { FieldAdapter } from './types';
 
 export function initOptionalString(selector: string): FieldAdapter {
-    const input = document.querySelector<HTMLInputElement>(selector);
+    const input = document.querySelector<HTMLInputElement| HTMLTextAreaElement>(selector);
 
     if (!input) {
         console.warn(`Name input (${selector}) not found.`);
@@ -25,4 +25,7 @@ export function initCity(): FieldAdapter {
 }
 export function initStreet(): FieldAdapter {
     return initOptionalString('#street');
+}
+export function initNote(): FieldAdapter {
+    return initOptionalString('#note');
 }

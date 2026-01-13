@@ -3,7 +3,7 @@ import initPhone from './initFields/phone';
 import initEmail from './initFields/email';
 import initGender from './initFields/gender';
 import {initFirstName, initLastName} from './initFields/notEmpty';
-import {initCity, initStreet} from './initFields/optionalString';
+import {initCity, initStreet, initNote} from './initFields/optionalString';
 import initHouseNumber from './initFields/houseNumber';
 import initZipCode from './initFields/zipCode';
 import submitContact from './submit'
@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const streetAdapter = initStreet();
   const houseNumberAdapter = initHouseNumber();
   const zipCodeAdapter = initZipCode();
+  const noteAdapter = initNote();
 
   // const apiEndpoint = 'http://localhost:3333/api/contacts',
   submitContact(firstNameAdapter, lastNameAdapter,emailAdapter, genderAdapter, phoneAdapter);
