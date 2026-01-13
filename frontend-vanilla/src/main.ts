@@ -4,6 +4,7 @@ import initEmail from './initFields/email';
 import initGender from './initFields/gender';
 import {initFirstName, initLastName, initCity, initStreet} from './initFields/notEmpty';
 import initHouseNumber from './initFields/houseNumber';
+import initZipCode from './initFields/zipCode';
 import submitContact from './submit'
 
 
@@ -17,7 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const phoneAdapter = initPhone();
   const cityAdapter = initCity();
   const streetAdapter = initStreet();
-  const houseNumber = initHouseNumber();
+  const houseNumberAdapter = initHouseNumber();
+  const zipCodeAdapter = initZipCode();
 
   // const apiEndpoint = 'http://localhost:3333/api/contacts',
   submitContact(firstNameAdapter, lastNameAdapter,emailAdapter, genderAdapter, phoneAdapter);
@@ -34,8 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
 //
 // API endpointy jsou dostupné na: http://localhost:3333/api/contacts
 // Dokumentace API: http://localhost:3333/swagger
-
-console.log('Vanilla TypeScript frontend připraven k implementaci!');
 
 
 const app = document.getElementById('app');
