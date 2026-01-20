@@ -43,5 +43,5 @@ export default function initZip() {
   input.addEventListener('blur', updateError);
   input.addEventListener('input', onInput);
 
-  return () => input.value;
+  return () => normalizeZip(input.value);
 }
