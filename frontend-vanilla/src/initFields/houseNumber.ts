@@ -1,7 +1,6 @@
 
 import { z } from 'zod';
 import { getErrorElement, debounce } from '../helpers';
-import type { FieldAdapter } from './types';
 
 // start digits, optional (sep + digits + optional letter)
 // for czech formats like 123, 123/2a, 123/1
@@ -12,12 +11,12 @@ const houseNumberSchema = z
   .trim()
   .regex(houseNumberRegex, 'Use formats like 123, 123/7, 123-7a');
 
-export default function initHouseNumber(): FieldAdapter {
+export default function initHouseNumber() {
   const input = document.querySelector<HTMLInputElement>('#houseNumber');
 
   if (!input) {
     console.warn('House number input (#houseNumber) not found.');
-    return { isValid: () => true, getValue: () => '' };
+    return  () => '';
   }
 
   const errorEl = getErrorElement(input);
@@ -29,10 +28,12 @@ export default function initHouseNumber(): FieldAdapter {
       const msg = result.error.issues[0]?.message ?? 'Invalid house number';
       if (errorEl) errorEl.textContent = msg;
       errorShown = true;
+      input.setCustomValidity("Invalid house number");
       return false;
     }
     if (errorEl) errorEl.textContent = '';
     errorShown = false;
+    input.setCustomValidity("");
     return true;
   };
 
@@ -42,11 +43,5 @@ export default function initHouseNumber(): FieldAdapter {
   input.addEventListener('blur', updateError);
   input.addEventListener('input', onInput);
 
-  return {
-    isValid: () => validate(input.value),
-    getValue: () => {
-      const val = input.value.trim();
-      return houseNumberSchema.safeParse(val).success ? val : '';
-    },
-  };
+  return () => input.value;
 }
