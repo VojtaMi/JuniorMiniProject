@@ -1,31 +1,19 @@
-import type { FieldAdapter } from './types';
-
-export function initOptionalString(selector: string): FieldAdapter {
-    const input = document.querySelector<HTMLInputElement| HTMLTextAreaElement>(selector);
+export function initOptionalString(selector: string) {
+    const input = document.querySelector<HTMLInputElement | HTMLTextAreaElement>(selector);
 
     if (!input) {
         console.warn(`Name input (${selector}) not found.`);
-        return {
-            isValid: () => true,
-            getValue: () => '',
-        };
+        return () => "";
     }
+    return () => input.value.trim();
+};
 
-    const getValue = (): string => {
-        // Return normalized (trimmed) value if valid; otherwise empty string
-        const trimmed = input.value.trim();
-        return trimmed;
-    };
-
-    return { isValid: () => true, getValue };
-}
-
-export function initCity(): FieldAdapter {
+export function initCity() {
     return initOptionalString('#city');
 }
-export function initStreet(): FieldAdapter {
+export function initStreet() {
     return initOptionalString('#street');
 }
-export function initNote(): FieldAdapter {
+export function initNote() {
     return initOptionalString('#note');
 }

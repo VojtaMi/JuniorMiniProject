@@ -1,7 +1,6 @@
 
 import { z } from 'zod';
 import { getErrorElement, debounce } from '../helpers';
-import type { FieldAdapter } from './types';
 
 const zipCodeRegex = /^(\d{3}[\s/-]?\d{2})?$/;
 
@@ -12,12 +11,12 @@ const zipCodeSchema = z
 
 const normalizeZip = (zipInput: string) => zipInput.replace(/\D+/g, "");
 
-export default function initZip(): FieldAdapter {
+export default function initZip() {
   const input = document.querySelector<HTMLInputElement>('#zipCode');
 
   if (!input) {
     console.warn('Zip code input (#zipCode) not found.');
-    return { isValid: () => false, getValue: () => '' };
+    return () => '';
   }
 
   const errorEl = getErrorElement(input);
@@ -29,10 +28,12 @@ export default function initZip(): FieldAdapter {
       const msg = result.error.issues[0]?.message ?? 'Invalid ZIP code';
       if (errorEl) errorEl.textContent = msg;
       errorShown = true;
+      input.setCustomValidity("Invalid ZIP code");
       return false;
     }
     if (errorEl) errorEl.textContent = '';
     errorShown = false;
+    input.setCustomValidity("");
     return true;
   };
 
@@ -42,11 +43,5 @@ export default function initZip(): FieldAdapter {
   input.addEventListener('blur', updateError);
   input.addEventListener('input', onInput);
 
-  return {
-    isValid: () => validate(input.value),
-    getValue: () => {
-      const val = normalizeZip(input.value);
-      return zipCodeSchema.safeParse(val).success ? val : '';
-    },
-  };
+  return () => input.value;
 }
