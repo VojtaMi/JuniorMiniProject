@@ -6,6 +6,7 @@ import {initFirstName, initLastName} from './initFields/notEmpty';
 import {initCity, initStreet, initNote} from './initFields/optionalString';
 import initHouseNumber from './initFields/houseNumber';
 import initZipCode from './initFields/zipCode';
+import initBirthDate from './initFields/birthDate';
 import submitContact from './submit'
 
 
@@ -22,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const houseNumberAdapter = initHouseNumber();
   const zipCodeAdapter = initZipCode();
   const noteAdapter = initNote();
+  const birthDateAdapter = initBirthDate();
 
   // const apiEndpoint = 'http://localhost:3333/api/contacts',
   submitContact(firstNameAdapter, lastNameAdapter,emailAdapter, genderAdapter, phoneAdapter);
