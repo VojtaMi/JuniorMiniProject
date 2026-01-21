@@ -1,33 +1,12 @@
 import './styles/main.css';
-import initPhone from './initFields/phone';
-import initEmail from './initFields/email';
-import initGender from './initFields/gender';
-import {initFirstName, initLastName} from './initFields/notEmpty';
-import {initCity, initStreet, initNote} from './initFields/optionalString';
-import initHouseNumber from './initFields/houseNumber';
-import initZipCode from './initFields/zipCode';
-import initBirthDate from './initFields/birthDate';
-import submitContact from './submit'
-
+import inputs from './inputs'
+import handleSubmit from './submit'
 
 
 // Wait until the DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-  const firstName = initFirstName();
-  const lastName = initLastName();
-  const email = initEmail();
-  const gender = initGender();
-  const birthDate = initBirthDate();
-  const phone = initPhone();
-  const city = initCity();
-  const street = initStreet();
-  const houseNumber = initHouseNumber();
-  const zipCode = initZipCode();
-  const note = initNote();
-  
-
   // const apiEndpoint = 'http://localhost:3333/api/contacts',
-  submitContact(firstName, lastName, email, gender, birthDate, phone, city, street, houseNumber, zipCode, note);
+  handleSubmit(inputs);
 });
 
 
