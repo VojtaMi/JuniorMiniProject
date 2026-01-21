@@ -2,15 +2,27 @@ import './styles/main.css';
 import inputs from './inputs'
 import handleSubmit from './submit'
 
+async function insertHeaderBtns(){
+  try {
+    const response = await fetch('header_buttons.html');
+    const html = await response.text();
+    const navBtns = document.getElementById("nav-btns");
+    if (navBtns) {
+      navBtns.innerHTML = html;
+    } else {
+      console.warn('nav element for buttons missing!');
+    }
+  } catch (error) {
+    console.error('Failed to fetch page: ', error);
+  }
+}
 
-// Wait until the DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-  // const apiEndpoint = 'http://localhost:3333/api/contacts',
-  handleSubmit(inputs);
+async function initHeaderButtons(){
+  await insertHeaderBtns();
   const newContactBtn = document.getElementById("new-contact-btn");
-  if (!newContactBtn){
+  if (!newContactBtn) {
     console.log("no newContactBtn")
-  }else{
+  } else {
     newContactBtn.addEventListener("click", () => console.log("newContactBtn pressed"));
   }
 
@@ -20,6 +32,14 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     contactListBtn.addEventListener("click", () => console.log("contactListBtn pressed"));
   }
+}
+
+
+// Wait until the DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  // const apiEndpoint = 'http://localhost:3333/api/contacts',
+  initHeaderButtons();
+  handleSubmit(inputs);
   
 });
 
