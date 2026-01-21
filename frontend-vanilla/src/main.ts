@@ -2,6 +2,8 @@ import './styles/main.css';
 import inputs from './inputs'
 import handleSubmit from './submit'
 
+const API_URL = 'http://localhost:3333/api/contacts';
+
 async function insertHeaderBtns(){
   try {
     const response = await fetch('header_buttons.html');
@@ -35,6 +37,11 @@ function displayForm() {
   }
 }
 
+async function displayContatPage(){
+  hideForm();
+  console.log(await sendHttpRequest("GET", API_URL))
+}
+
 async function initHeaderButtons(){
   await insertHeaderBtns();
   const newContactBtn = document.getElementById("new-contact-btn");
@@ -48,8 +55,31 @@ async function initHeaderButtons(){
   if (!contactListBtn) {
     console.log("no contactListBtn")
   } else {
-    contactListBtn.addEventListener("click", hideForm);
+    contactListBtn.addEventListener("click", displayContatPage);
   }
+}
+
+function sendHttpRequest(method:string, url:string) {
+  return fetch(url, {
+    method: method,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(response => {
+      if (response.status >= 200 && response.status < 300) {
+        return response.json();
+      } else {
+        return response.json().then(errData => {
+          console.log(errData);
+          throw new Error('Something went wrong - server side')
+        });
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      throw new Error('Something went wrong!');
+    });
 }
 
 
