@@ -17,20 +17,38 @@ async function insertHeaderBtns(){
   }
 }
 
+function hideForm(){
+  const formContainer = document.getElementById("contact-form-container");
+  if (formContainer){
+    formContainer.style.display = "none";
+  }else{
+    console.warn('no form conteiner found!')
+  }
+}
+
+function displayForm() {
+  const formContainer = document.getElementById("contact-form-container");
+  if (formContainer) {
+    formContainer.style.display = "block";
+  } else {
+    console.warn('no form conteiner found!')
+  }
+}
+
 async function initHeaderButtons(){
   await insertHeaderBtns();
   const newContactBtn = document.getElementById("new-contact-btn");
   if (!newContactBtn) {
     console.log("no newContactBtn")
   } else {
-    newContactBtn.addEventListener("click", () => console.log("newContactBtn pressed"));
+    newContactBtn.addEventListener("click", displayForm);
   }
 
   const contactListBtn = document.getElementById("contact-list-btn");
   if (!contactListBtn) {
     console.log("no contactListBtn")
   } else {
-    contactListBtn.addEventListener("click", () => console.log("contactListBtn pressed"));
+    contactListBtn.addEventListener("click", hideForm);
   }
 }
 
