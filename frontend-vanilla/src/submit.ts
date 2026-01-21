@@ -1,5 +1,7 @@
 
-export default function submitContact(inputs: Record<string, ()=>string>) {
+// the function will submit contact on submit event
+// submits if the form passes the validity
+export default function handleSubmit(inputs: Record<string, ()=>string>) {
     const form = document.querySelector('#contact-form') as HTMLFormElement | null;
 
     if (!form) {
