@@ -58,30 +58,26 @@ async function initHeaderButtons(){
     contactListBtn.addEventListener("click", displayContatPage);
   }
 }
-
-function sendHttpRequest(method:string, url:string) {
-  return fetch(url, {
-    method: method,
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-    .then(response => {
-      if (response.status >= 200 && response.status < 300) {
-        return response.json();
-      } else {
-        return response.json().then(errData => {
-          console.log(errData);
-          throw new Error('Something went wrong - server side')
-        });
+async function sendHttpRequest(method: string, url: string) {
+  try{
+    const response = await fetch(url, {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json'
       }
-    })
-    .catch(error => {
-      console.log(error);
-      throw new Error('Something went wrong!');
     });
+    if (response.status >= 200 && response.status < 300) {
+      return response.json();
+    } else {
+      return response.json().then(errData => {
+        console.log(errData);
+        throw new Error('Something went wrong - server side')
+      });
+    }
+  } catch (error){
+    console.warn('issues catching the response')
+  }
 }
-
 
 // Wait until the DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
