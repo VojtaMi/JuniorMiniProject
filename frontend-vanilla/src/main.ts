@@ -29,13 +29,13 @@ async function insertHeaderBtns() {
 }
 
 function hideForm() {
-    if (FORM_CONTAINER !== null) {
+    if (FORM_CONTAINER) {
       FORM_CONTAINER.style.display = "none";
     }
 }
 
 function displayForm() {
-  if (FORM_CONTAINER !== null) {
+  if (FORM_CONTAINER) {
     FORM_CONTAINER.style.display = "block";
   }
 }

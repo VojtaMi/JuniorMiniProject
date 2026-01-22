@@ -100,7 +100,8 @@
           <textarea id="note" name="note" placeholder="Any additional detail (optional)" rows="3"></textarea>
         </div>
 
-        <button type="submit">Add Contact</button>
+        <button id="submit-btn" type="submit" aria-describedby="submit-message">Add Contact</button>
+        <p id="submit-message" aria-live="polite"></p>
       </form>
     </div>
     <div id="contacts-list">

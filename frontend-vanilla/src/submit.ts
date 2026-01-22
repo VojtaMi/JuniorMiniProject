@@ -1,7 +1,8 @@
 import { sendHttpRequest } from './apiComm'
+import { getErrorElement } from './helpers';
 // the function will submit contact on submit event
 // submits if the form passes the validity
-export default function handleSubmit(root: ParentNode, inputs: Record<string, () => string>) {
+export default function handleSubmit(root: HTMLFormElement, inputs: Record<string, () => string>) {
     root.addEventListener('submit', event => {
         event.preventDefault();
         for (const input in inputs) {
@@ -20,6 +21,38 @@ export default function handleSubmit(root: ParentNode, inputs: Record<string, ()
             zipCode: inputs.getZipCode(),
             birthDate: inputs.getBirthDate(),
         };
+
+        function setSubmitMessage(submitMsgElement: HTMLElement | null, text: string, classToSet: string|null = null){
+        if (submitMsgElement) {
+            submitMsgElement.textContent = text;
+            if (classToSet){
+                submitMsgElement.classList = classToSet;
+            }
+            root.reset();
+        }
+
+    }
+
+        let submitMsgElement: HTMLElement | null;
+        const submitElement = root.querySelector<HTMLInputElement>('#submit-btn');
+        if (submitElement) {
+            submitMsgElement = getErrorElement(submitElement);
+        }
+
         sendHttpRequest("POST", contact)
+            .then((value) => {
+                console.log(value.message);
+                setSubmitMessage(submitMsgElement, value.message, "success")
+            })
+            .catch((err) => {
+                setSubmitMessage(submitMsgElement, err, "error")
+            }
+            )
+            .finally(() => {
+                setTimeout( () => {
+                    setSubmitMessage(submitMsgElement, "")
+                }, 3000);
+            });
+
     });
 }
