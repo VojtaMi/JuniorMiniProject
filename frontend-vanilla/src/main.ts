@@ -2,11 +2,93 @@ import './styles/main.css';
 import inputs from './inputs'
 import handleSubmit from './submit'
 
+const API_URL = 'http://localhost:3333/api/contacts';
+
+async function insertHeaderBtns(){
+  try {
+    const response = await fetch('header_buttons.html');
+    const html = await response.text();
+    const navBtns = document.getElementById("nav-btns");
+    if (navBtns) {
+      navBtns.innerHTML = html;
+    } else {
+      console.warn('nav element for buttons missing!');
+    }
+  } catch (error) {
+    console.error('Failed to fetch page: ', error);
+  }
+}
+
+function hideForm(){
+  const formContainer = document.getElementById("contact-form-container");
+  if (formContainer){
+    formContainer.style.display = "none";
+  }else{
+    console.warn('no form conteiner found!')
+  }
+}
+
+function displayForm() {
+  const formContainer = document.getElementById("contact-form-container");
+  if (formContainer) {
+    formContainer.style.display = "block";
+  } else {
+    console.warn('no form conteiner found!')
+  }
+}
+
+async function displayContatPage(){
+  hideForm();
+  console.log(await sendHttpRequest("GET", API_URL))
+}
+
+async function initHeaderButtons(){
+  await insertHeaderBtns();
+  const newContactBtn = document.getElementById("new-contact-btn");
+  if (!newContactBtn) {
+    console.log("no newContactBtn")
+  } else {
+    newContactBtn.addEventListener("click", displayForm);
+  }
+
+  const contactListBtn = document.getElementById("contact-list-btn");
+  if (!contactListBtn) {
+    console.log("no contactListBtn")
+  } else {
+    contactListBtn.addEventListener("click", displayContatPage);
+  }
+}
+
+function sendHttpRequest(method:string, url:string) {
+  return fetch(url, {
+    method: method,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(response => {
+      if (response.status >= 200 && response.status < 300) {
+        return response.json();
+      } else {
+        return response.json().then(errData => {
+          console.log(errData);
+          throw new Error('Something went wrong - server side')
+        });
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      throw new Error('Something went wrong!');
+    });
+}
+
 
 // Wait until the DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
   // const apiEndpoint = 'http://localhost:3333/api/contacts',
+  initHeaderButtons();
   handleSubmit(inputs);
+  
 });
 
 
@@ -20,11 +102,4 @@ document.addEventListener('DOMContentLoaded', () => {
 //
 // API endpointy jsou dostupné na: http://localhost:3333/api/contacts
 // Dokumentace API: http://localhost:3333/swagger
-
-
-const app = document.getElementById('app');
-
-if (app) {
-
-}
 
