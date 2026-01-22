@@ -38,7 +38,8 @@ function displayForm() {
 
 async function displayContatPage(){
   hideForm();
-  console.log(await sendHttpRequest("GET"))
+  const response = await sendHttpRequest("GET");
+  console.log(response.data);
 }
 
 async function initHeaderButtons(){
@@ -67,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }else{
     const inputs = initializeInputFields(formHtmlElement);
-    handleSubmit(inputs);
+    handleSubmit(formHtmlElement, inputs);
   }
 });
 
