@@ -1,8 +1,7 @@
 import './styles/main.css';
-import {createInputs} from './inputs'
+import { initializeInputFields } from './inputs'
+import { sendHttpRequest } from './apiComm'
 import handleSubmit from './submit'
-
-const API_URL = 'http://localhost:3333/api/contacts';
 
 async function insertHeaderBtns(){
   try {
@@ -39,7 +38,7 @@ function displayForm() {
 
 async function displayContatPage(){
   hideForm();
-  console.log(await sendHttpRequest("GET", API_URL))
+  console.log(await sendHttpRequest("GET"))
 }
 
 async function initHeaderButtons(){
@@ -58,37 +57,16 @@ async function initHeaderButtons(){
     contactListBtn.addEventListener("click", displayContatPage);
   }
 }
-async function sendHttpRequest(method: string, url: string) {
-  try{
-    const response = await fetch(url, {
-      method: method,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    if (response.status >= 200 && response.status < 300) {
-      return response.json();
-    } else {
-      return response.json().then(errData => {
-        console.log(errData);
-        throw new Error('Something went wrong - server side')
-      });
-    }
-  } catch (error){
-    console.warn('issues catching the response')
-  }
-}
 
 // Wait until the DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-  // const apiEndpoint = 'http://localhost:3333/api/contacts',
   initHeaderButtons();
   const formHtmlElement = document.querySelector('#contact-form') as HTMLFormElement | null;
   if (!formHtmlElement) {
     console.warn('Form #contact-form not found.');
     return;
   }else{
-    const inputs = createInputs(formHtmlElement);
+    const inputs = initializeInputFields(formHtmlElement);
     handleSubmit(inputs);
   }
 });

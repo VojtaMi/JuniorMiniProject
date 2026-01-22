@@ -8,7 +8,7 @@ import initZipCode from './initFields/zipCode';
 import initBirthDate from './initFields/birthDate';
 
 
-export function createInputs(root: ParentNode) {
+export function initializeInputFields(root: ParentNode) {
     return {
         getFirstName: initFirstName(root),
         getLastName: initLastName(root),
