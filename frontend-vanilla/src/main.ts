@@ -40,12 +40,10 @@ function displayForm() {
   }
 }
 
-async function displayContactList(data: Array<Record<string, any>>) {
-  const contactsList = document.getElementById("contacts-list");
-  if (contactsList) {
-    contactsList.style.display = "block";
-    const contacts = data;
-    contactsList.innerHTML = "";
+async function displayContactList(contacts: Array<Record<string, any>>) {
+  if (CONTACTS_LIST) {
+    CONTACTS_LIST.style.display = "block";
+    CONTACTS_LIST.innerHTML = "";
     // Vyrenderovat seznam pomocí DOM manipulace
     contacts.forEach(contact => {
       const li = document.createElement('li');
@@ -53,12 +51,9 @@ async function displayContactList(data: Array<Record<string, any>>) {
       li.addEventListener('click', () => {
         // TODO: Zobrazit detail
       });
-      contactsList.appendChild(li);
+      CONTACTS_LIST.appendChild(li);
     });
-
-  } else {
-    console.warn('no form conteiner found!')
-  }
+  } 
 }
 
 function hideContactList() {
