@@ -3,7 +3,17 @@ import { initializeInputFields } from './inputs'
 import { sendHttpRequest } from './apiComm'
 import handleSubmit from './submit'
 
-async function insertHeaderBtns(){
+const FORM_CONTAINER = document.getElementById("contact-form-container");
+if (FORM_CONTAINER === null){
+  console.warn('#contact-form-container not found')
+}
+
+const CONTACTS_LIST = document.getElementById("contacts-list");
+if (CONTACTS_LIST === null) {
+  console.warn('#contact-list not found')
+}
+
+async function insertHeaderBtns() {
   try {
     const response = await fetch('header_buttons.html');
     const html = await response.text();
@@ -18,21 +28,15 @@ async function insertHeaderBtns(){
   }
 }
 
-function hideForm(){
-  const formContainer = document.getElementById("contact-form-container");
-  if (formContainer){
-    formContainer.style.display = "none";
-  }else{
-    console.warn('no form conteiner found!')
-  }
+function hideForm() {
+    if (FORM_CONTAINER !== null) {
+      FORM_CONTAINER.style.display = "none";
+    }
 }
 
 function displayForm() {
-  const formContainer = document.getElementById("contact-form-container");
-  if (formContainer) {
-    formContainer.style.display = "block";
-  } else {
-    console.warn('no form conteiner found!')
+  if (FORM_CONTAINER !== null) {
+    FORM_CONTAINER.style.display = "block";
   }
 }
 
@@ -41,7 +45,7 @@ async function displayContactList(data: Array<Record<string, any>>) {
   if (contactsList) {
     contactsList.style.display = "block";
     const contacts = data;
-    contactsList.innerHTML="";
+    contactsList.innerHTML = "";
     // Vyrenderovat seznam pomocí DOM manipulace
     contacts.forEach(contact => {
       const li = document.createElement('li');
@@ -57,18 +61,13 @@ async function displayContactList(data: Array<Record<string, any>>) {
   }
 }
 
-
-
 function hideContactList() {
-  const contactsList = document.getElementById("contacts-list");
-  if (contactsList) {
-    contactsList.style.display = "none";
-  } else {
-    console.warn('no form conteiner found!')
+  if (CONTACTS_LIST !== null) {
+    CONTACTS_LIST.style.display = "none";
   }
 }
 
-async function displayContatPage(){
+async function displayContatPage() {
   hideForm();
   const response = await sendHttpRequest("GET");
   const data = response.data;
@@ -81,7 +80,7 @@ function displayFormPage() {
   displayForm();
 }
 
-async function initHeaderButtons(){
+async function initHeaderButtons() {
   await insertHeaderBtns();
   const newContactBtn = document.getElementById("new-contact-btn");
   if (!newContactBtn) {
@@ -98,18 +97,16 @@ async function initHeaderButtons(){
   }
 }
 
-// Wait until the DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-  initHeaderButtons();
-  const formHtmlElement = document.querySelector('#contact-form') as HTMLFormElement | null;
-  if (!formHtmlElement) {
-    console.warn('Form #contact-form not found.');
-    return;
-  }else{
-    const inputs = initializeInputFields(formHtmlElement);
-    handleSubmit(formHtmlElement, inputs);
-  }
-});
+
+initHeaderButtons();
+const formHtmlElement = document.querySelector('#contact-form') as HTMLFormElement | null;
+if (!formHtmlElement) {
+  console.warn('Form #contact-form not found.');
+} else {
+  const inputs = initializeInputFields(formHtmlElement);
+  handleSubmit(formHtmlElement, inputs);
+}
+
 
 
 
