@@ -1,5 +1,5 @@
 import './styles/main.css';
-import inputs from './inputs'
+import {createInputs} from './inputs'
 import handleSubmit from './submit'
 
 const API_URL = 'http://localhost:3333/api/contacts';
@@ -83,8 +83,14 @@ async function sendHttpRequest(method: string, url: string) {
 document.addEventListener('DOMContentLoaded', () => {
   // const apiEndpoint = 'http://localhost:3333/api/contacts',
   initHeaderButtons();
-  handleSubmit(inputs);
-  
+  const formHtmlElement = document.querySelector('#contact-form') as HTMLFormElement | null;
+  if (!formHtmlElement) {
+    console.warn('Form #contact-form not found.');
+    return;
+  }else{
+    const inputs = createInputs(formHtmlElement);
+    handleSubmit(inputs);
+  }
 });
 
 
