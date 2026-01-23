@@ -28,21 +28,26 @@ function fillDetails(node: DocumentFragment, contact: Contact){
     const summary = node.querySelector("summary");
     
     const fullName = `${contact.firstName} ${contact.lastName}`;
-    summary.textContent = fullName;
+    summary!.textContent = fullName;
     
-    for (const field in contact){
+    const fields: (keyof Contact)[] = ["email", "gender", "birthDate", "phone", "city", "street", "zipCode", "houseNumber", "note"];
+    for (const field of fields){
         const fieldHtmlElement = node.querySelector(`#field-${field}`);
-        if (contact[field]){
-            if (fieldHtmlElement){
-                fieldHtmlElement.textContent = contact[field];
+        if (fieldHtmlElement){
+            console.log("here "+ fieldHtmlElement.id);
+            if (contact[field]) {
+                console.log("if " + contact[field]);
+                console.log(contact[field]);
+                if (fieldHtmlElement) {
+                    fieldHtmlElement.textContent = contact[field];
+                }
+            } else {
+                console.log("else");
+                const closestDiv = fieldHtmlElement.closest("div");
+                closestDiv!.style.display = "none";
             }
         }
-        else {
-            fieldHtmlElement?.closest("div")?.style.display
-
-        }
     }
-    
 }
 
 async function displayContactList(contacts: Contact[]) {
@@ -71,15 +76,13 @@ async function displayContactList(contacts: Contact[]) {
                         return;
                     }
                 }
-
                 // 3) Ignore clicks on buttons
                 if (target.closest('button')) return;
 
                 // 4) Otherwise, toggle
-                summary.click();
+                summary!.click();
+
             });
-
-
 
             // 3. Append to list
             CONTACTS_LIST.appendChild(node);
