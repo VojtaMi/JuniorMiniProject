@@ -57,10 +57,12 @@ async function displayContactList(contacts: Array<Record<string, any>>) {
       const node = CONTACT_TPL.content.cloneNode(true) as DocumentFragment;
 
       const summary = node.querySelector("summary")!;
+      const emailField = node.querySelector(".field-email")!;
 
       const fullName = `${contact.firstName} ${contact.lastName}`;
 
       summary.textContent = fullName;
+      emailField.textContent = contact.email;
 
       // 3. Append to list
       CONTACTS_LIST.appendChild(node);
