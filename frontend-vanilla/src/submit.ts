@@ -28,7 +28,6 @@ export default function handleSubmit(root: HTMLFormElement, inputs: Record<strin
             if (classToSet){
                 submitMsgElement.classList = classToSet;
             }
-            root.reset();
         }
 
     }
@@ -42,10 +41,11 @@ export default function handleSubmit(root: HTMLFormElement, inputs: Record<strin
         sendHttpRequest("POST", contact)
             .then((value) => {
                 console.log(value.message);
-                setSubmitMessage(submitMsgElement, value.message, "success")
+                setSubmitMessage(submitMsgElement, value.message, "success");
+                root.reset();
             })
             .catch((err) => {
-                setSubmitMessage(submitMsgElement, err, "error")
+                setSubmitMessage(submitMsgElement, err, "error");
             }
             )
             .finally(() => {
