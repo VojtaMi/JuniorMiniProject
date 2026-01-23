@@ -28,6 +28,6 @@ export async function sendHttpRequest(method: string, data: object | null = null
             });
         }
     } catch (error) {
-        console.warn('issues catching the response')
+        throw(error);
     }
 }

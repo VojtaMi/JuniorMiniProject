@@ -64,10 +64,15 @@ function hideContactList() {
 
 async function displayContatPage() {
   hideForm();
-  const response = await sendHttpRequest("GET");
-  const data = response.data;
-  console.log(response.data);
-  displayContactList(data);
+  try{
+    const response = await sendHttpRequest("GET");
+    const data = response.data;
+    console.log(response.data);
+    displayContactList(data);
+  } catch (error) {
+    console.error('Failed to fetch page: ', error);
+    alert(error);
+  }
 }
 
 function displayFormPage() {
