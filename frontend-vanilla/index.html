@@ -109,30 +109,33 @@
     </div>
 
     <ul id="contacts-list">
-      <li>
-        <details>
-          <summary>další kontakt</summary>
-          <dl class="contact-details">
-            <div>
-              <dt>Jméno</dt>
-              <dd>Jana Nováková</dd>
-            </div>
-            <div>
-              <dt>E-mail</dt>
-              <dd>jana@example.com</dd>
-            </div>
-            <div>
-              <dt>Telefon</dt>
-              <dd>+420 777 123 456</dd>
-            </div>
-            <div class="update-btns">
-              <button class="update-btn">update</button>
-              <button class="delete-btn">delete</button>
-            </div>
 
-          </dl>
-        </details>
-      </li>
+      <template id="contact-item-tpl">
+        <li>
+          <details>
+            <summary>další kontakt</summary>
+            <dl class="contact-details">
+              <div>
+                <dt>Jméno</dt>
+                <dd>Jana Nováková</dd>
+              </div>
+              <div>
+                <dt>E-mail</dt>
+                <dd>jana@example.com</dd>
+              </div>
+              <div>
+                <dt>Telefon</dt>
+                <dd>+420 777 123 456</dd>
+              </div>
+              <div class="update-btns">
+                <button class="update-btn">update</button>
+                <button class="delete-btn">delete</button>
+              </div>
+        
+            </dl>
+          </details>
+        </li>
+      </template>
     </ul>
 
 

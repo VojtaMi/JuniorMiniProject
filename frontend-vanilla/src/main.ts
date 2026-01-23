@@ -13,19 +13,9 @@ if (CONTACTS_LIST === null) {
   console.warn('#contact-list not found')
 }
 
-async function fetchContactDetailTemplate() {
-  try {
-    const response = await fetch('contacts.html');
-    const html = await response.text();
-    const navBtns = document.getElementById("nav-btns");
-    if (navBtns) {
-      navBtns.innerHTML = html;
-    } else {
-      console.warn('nav element for buttons missing!');
-    }
-  } catch (error) {
-    console.error('Failed to fetch page: ', error);
-  }
+const CONTACT_TPL = document.getElementById("contact-item-tpl") as HTMLTemplateElement|null;
+if (CONTACT_TPL === null) {
+  console.warn('#contact-tpl not found')
 }
 
 function hideForm() {
@@ -40,21 +30,45 @@ function displayForm() {
   }
 }
 
+// async function displayContactList(contacts: Array<Record<string, any>>) {
+//   if (CONTACTS_LIST) {
+//     CONTACTS_LIST.style.display = "block";
+//     CONTACTS_LIST.innerHTML = "";
+//     // Vyrenderovat seznam pomocí DOM manipulace
+//     contacts.forEach(contact => {
+//       const li = document.createElement('li');
+//       li.textContent = `${contact.firstName} ${contact.lastName}`;
+//       li.addEventListener('click', () => {
+//         // TODO: Zobrazit detail
+//       });
+//       CONTACTS_LIST.appendChild(li);
+//     });
+//   } 
+// }
+
+
+
 async function displayContactList(contacts: Array<Record<string, any>>) {
-  if (CONTACTS_LIST) {
-    CONTACTS_LIST.style.display = "block";
-    // CONTACTS_LIST.innerHTML = "";
-    // Vyrenderovat seznam pomocí DOM manipulace
+  if (CONTACTS_LIST && CONTACT_TPL){
+    CONTACTS_LIST.innerHTML = "";
+
     contacts.forEach(contact => {
-      const li = document.createElement('li');
-      li.textContent = `${contact.firstName} ${contact.lastName}`;
-      li.addEventListener('click', () => {
-        // TODO: Zobrazit detail
-      });
-      CONTACTS_LIST.appendChild(li);
+      // 1. Create a deep clone of the <template>
+      const node = CONTACT_TPL.content.cloneNode(true) as DocumentFragment;
+
+      const summary = node.querySelector("summary")!;
+
+      const fullName = `${contact.firstName} ${contact.lastName}`;
+
+      summary.textContent = fullName;
+
+      // 3. Append to list
+      CONTACTS_LIST.appendChild(node);
     });
-  } 
+
+  }
 }
+
 
 function hideContactList() {
   if (CONTACTS_LIST !== null) {
