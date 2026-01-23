@@ -10,26 +10,52 @@ const CONTACT_TPL = document.getElementById("contact-item-tpl") as HTMLTemplateE
 if (CONTACT_TPL === null) {
     console.warn('#contact-tpl not found')
 }
+type Contact = { 
+    firstName: string; 
+    lastName: string; 
+    email: string; 
+    gender: string;
+    birthDate: string;
+    phone: string;
+    city: string;
+    street: string;
+    houseNumber: string;
+    zipCode: string;
+    note: string;
+};
 
-async function displayContactList(contacts: Array<Record<string, any>>) {
+function fillDetails(node: DocumentFragment, contact: Contact){
+    const summary = node.querySelector("summary");
+    
+    const fullName = `${contact.firstName} ${contact.lastName}`;
+    summary.textContent = fullName;
+    
+    for (const field in contact){
+        const fieldHtmlElement = node.querySelector(`#field-${field}`);
+        if (contact[field]){
+            if (fieldHtmlElement){
+                fieldHtmlElement.textContent = contact[field];
+            }
+        }
+        else {
+            fieldHtmlElement?.closest("div")?.style.display
+
+        }
+    }
+    
+}
+
+async function displayContactList(contacts: Contact[]) {
     if (CONTACTS_LIST && CONTACT_TPL) {
         CONTACTS_LIST.innerHTML = "";
         CONTACTS_LIST.style.display = "block";
 
         contacts.forEach(contact => {
-            // 1. Create a deep clone of the <template>
             const node = CONTACT_TPL.content.cloneNode(true) as DocumentFragment;
-
+            const summary = node.querySelector("summary");
             const li = node.querySelector('li') as HTMLLIElement;
-            const summary = node.querySelector("summary")!;
-            const emailField = node.querySelector(".field-email")!;
 
-            const fullName = `${contact.firstName} ${contact.lastName}`;
-
-            summary.textContent = fullName;
-            emailField.textContent = contact.email;
-
-
+            fillDetails(node, contact);
 
             li.addEventListener('click', (e) => {
                 const target = e.target as HTMLElement;
