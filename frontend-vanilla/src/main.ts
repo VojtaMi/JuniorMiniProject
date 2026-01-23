@@ -67,7 +67,6 @@ async function displayContatPage() {
   try{
     const response = await sendHttpRequest("GET");
     const data = response.data;
-    console.log(response.data);
     displayContactList(data);
   } catch (error) {
     console.error('Failed to fetch page: ', error);
@@ -84,14 +83,14 @@ async function initHeaderButtons() {
   await insertHeaderBtns();
   const newContactBtn = document.getElementById("new-contact-btn");
   if (!newContactBtn) {
-    console.log("no newContactBtn")
+    console.warn("no newContactBtn")
   } else {
     newContactBtn.addEventListener("click", displayFormPage);
   }
 
   const contactListBtn = document.getElementById("contact-list-btn");
   if (!contactListBtn) {
-    console.log("no contactListBtn")
+    console.warn("no contactListBtn")
   } else {
     contactListBtn.addEventListener("click", displayContatPage);
   }

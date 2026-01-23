@@ -5,9 +5,9 @@ import { getErrorElement } from './helpers';
 export default function handleSubmit(root: HTMLFormElement, inputs: Record<string, () => string>) {
     root.addEventListener('submit', event => {
         event.preventDefault();
-        for (const input in inputs) {
-            console.log(`${input}: ${inputs[input]()}`);
-        }
+        // for (const input in inputs) {
+        //     console.log(`${input}: ${inputs[input]()}`);
+        // }
         const contact = {
             firstName: inputs.getFirstName(),
             lastName: inputs.getLastName(),
@@ -40,7 +40,7 @@ export default function handleSubmit(root: HTMLFormElement, inputs: Record<strin
 
         sendHttpRequest("POST", contact)
             .then((value) => {
-                console.log(value.message);
+                // console.log(value.message);
                 setSubmitMessage(submitMsgElement, value.message, "success");
                 root.reset();
             })
