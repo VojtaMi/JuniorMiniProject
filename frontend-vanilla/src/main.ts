@@ -13,9 +13,9 @@ if (CONTACTS_LIST === null) {
   console.warn('#contact-list not found')
 }
 
-async function insertHeaderBtns() {
+async function fetchContactDetailTemplate() {
   try {
-    const response = await fetch('header_buttons.html');
+    const response = await fetch('contacts.html');
     const html = await response.text();
     const navBtns = document.getElementById("nav-btns");
     if (navBtns) {
@@ -43,7 +43,7 @@ function displayForm() {
 async function displayContactList(contacts: Array<Record<string, any>>) {
   if (CONTACTS_LIST) {
     CONTACTS_LIST.style.display = "block";
-    CONTACTS_LIST.innerHTML = "";
+    // CONTACTS_LIST.innerHTML = "";
     // Vyrenderovat seznam pomocí DOM manipulace
     contacts.forEach(contact => {
       const li = document.createElement('li');
@@ -80,7 +80,6 @@ function displayFormPage() {
 }
 
 async function initHeaderButtons() {
-  await insertHeaderBtns();
   const newContactBtn = document.getElementById("new-contact-btn");
   if (!newContactBtn) {
     console.warn("no newContactBtn")
@@ -95,8 +94,7 @@ async function initHeaderButtons() {
     contactListBtn.addEventListener("click", displayContatPage);
   }
 }
-
-
+//---------------------------------------------------------------------------------------------
 initHeaderButtons();
 const formHtmlElement = document.querySelector('#contact-form') as HTMLFormElement | null;
 if (!formHtmlElement) {
