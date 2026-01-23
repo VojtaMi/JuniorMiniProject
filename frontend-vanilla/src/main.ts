@@ -4,7 +4,7 @@ import { sendHttpRequest } from './apiComm'
 import handleSubmit from './submit'
 
 const FORM_CONTAINER = document.getElementById("contact-form-container");
-if (FORM_CONTAINER === null){
+if (FORM_CONTAINER === null) {
   console.warn('#contact-form-container not found')
 }
 
@@ -13,15 +13,15 @@ if (CONTACTS_LIST === null) {
   console.warn('#contact-list not found')
 }
 
-const CONTACT_TPL = document.getElementById("contact-item-tpl") as HTMLTemplateElement|null;
+const CONTACT_TPL = document.getElementById("contact-item-tpl") as HTMLTemplateElement | null;
 if (CONTACT_TPL === null) {
   console.warn('#contact-tpl not found')
 }
 
 function hideForm() {
-    if (FORM_CONTAINER) {
-      FORM_CONTAINER.style.display = "none";
-    }
+  if (FORM_CONTAINER) {
+    FORM_CONTAINER.style.display = "none";
+  }
 }
 
 function displayForm() {
@@ -49,13 +49,14 @@ function displayForm() {
 
 
 async function displayContactList(contacts: Array<Record<string, any>>) {
-  if (CONTACTS_LIST && CONTACT_TPL){
+  if (CONTACTS_LIST && CONTACT_TPL) {
     CONTACTS_LIST.innerHTML = "";
 
     contacts.forEach(contact => {
       // 1. Create a deep clone of the <template>
       const node = CONTACT_TPL.content.cloneNode(true) as DocumentFragment;
 
+      const li = node.querySelector('li') as HTMLLIElement;
       const summary = node.querySelector("summary")!;
       const emailField = node.querySelector(".field-email")!;
 
@@ -63,6 +64,32 @@ async function displayContactList(contacts: Array<Record<string, any>>) {
 
       summary.textContent = fullName;
       emailField.textContent = contact.email;
+
+
+
+      li.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+
+        // 1) Let native behavior work if clicking <summary>
+        if (target.closest('summary')) return;
+
+        // 2) Ignore when user is selecting text
+        const sel = window.getSelection();
+        if (sel && !sel.isCollapsed) {
+          const { anchorNode, focusNode } = sel;
+          if ((anchorNode && li.contains(anchorNode)) || (focusNode && li.contains(focusNode))) {
+            return;
+          }
+        }
+
+        // 3) Ignore clicks on buttons
+        if (target.closest('button')) return;
+
+        // 4) Otherwise, toggle
+        summary.click();
+      });
+
+
 
       // 3. Append to list
       CONTACTS_LIST.appendChild(node);
@@ -80,7 +107,7 @@ function hideContactList() {
 
 async function displayContatPage() {
   hideForm();
-  try{
+  try {
     const response = await sendHttpRequest("GET");
     const data = response.data;
     displayContactList(data);
