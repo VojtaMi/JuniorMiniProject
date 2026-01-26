@@ -1,6 +1,7 @@
 import { sendHttpRequest } from './apiComm'
 import { hideForm, displayForm, fillFromSaved } from './formPage'
 import { Contact } from './types'
+import { cutDateToYYYYMMDD } from './helpers'
 
 const CONTACTS_LIST = document.getElementById("contacts-list");
 if (CONTACTS_LIST === null) {
@@ -19,7 +20,7 @@ function fillDetails(node: DocumentFragment, contact: Contact){
     summary!.textContent = fullName;
     
     // displays non empty fields for details
-    const fields: (keyof Contact)[] = ["email", "gender", "birthDate", "phone", "city", "street", "zipCode", "houseNumber", "note"];
+    const fields: (keyof Contact)[] = ["email", "gender","phone", "city", "street", "zipCode", "houseNumber", "note"];
     for (const field of fields){
         const fieldHtmlElement = node.querySelector(`#field-${field}`);
         if (fieldHtmlElement){
@@ -30,6 +31,11 @@ function fillDetails(node: DocumentFragment, contact: Contact){
                 closestDiv!.style.display = "none";
             }
         }
+    }
+
+    const birthDateHtmlElement = node.querySelector(`#field-birthDate`);
+    if (birthDateHtmlElement){
+        birthDateHtmlElement.textContent = cutDateToYYYYMMDD(contact.birthDate);
     }
 }
 
