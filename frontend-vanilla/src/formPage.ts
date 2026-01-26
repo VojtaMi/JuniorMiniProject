@@ -6,6 +6,7 @@ const FORM_CONTAINER = document.getElementById("contact-form-container");
 if (FORM_CONTAINER === null) {
   console.warn('#contact-form-container not found')
 }
+const FORM = FORM_CONTAINER?.querySelector('#contact-form') as HTMLFormElement | null;
 
 
 export function hideForm() {
@@ -22,20 +23,28 @@ export function displayForm() {
 
 export function displayFormPage() {
   hideContactList();
+  if (FORM){
+    FORM.reset();
+  }
   displayForm();
 }
 
 function  setInputValue(inputId: string, value: string) {
-  if (FORM_CONTAINER) {
-    const inputElement = FORM_CONTAINER.querySelector(`#${inputId}`) as HTMLInputElement;
-    if (inputElement) {
-      inputElement.value = value; 
+  if (value){
+    if (FORM_CONTAINER) {
+      const inputElement = FORM_CONTAINER.querySelector(`#${inputId}`) as HTMLInputElement;
+      if (inputElement) {
+        inputElement.value = value;
+      }
     }
   }
 }
 
 export function fillFromSaved(contact: Contact) {
   if (FORM_CONTAINER) {
+    if (FORM) {
+      FORM.reset();
+    }
     setInputValue("firstName", contact.firstName);
     setInputValue("lastName", contact.lastName);
     setInputValue("email", contact.email);
@@ -46,5 +55,6 @@ export function fillFromSaved(contact: Contact) {
     setInputValue("zipCode", contact.zipCode);
     setInputValue("note", contact.note);
     setInputValue("birthDate", cutDateToYYYYMMDD(contact.birthDate));
+    
   }
 }

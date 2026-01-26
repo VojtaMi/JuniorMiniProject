@@ -23,5 +23,10 @@ export function debounce<T extends (...args: any[]) => void>(fn: T, delay = 300)
 }
 
 export function cutDateToYYYYMMDD(dateStr: string): string {
-  return dateStr.slice(0, 10);
+  if (dateStr){
+    return dateStr.slice(0, 10);;
+  }
+  else{
+    return "";
+  }
 } 
