@@ -47,7 +47,6 @@ function nameSubmitButton(operationType: string) {
 export function fillFromSaved(contact: Contact) {
   nameSubmitButton("Update");
   FORM?.setAttribute("data-contact-id", contact._id);
-  console.log(FORM?.getAttribute("data-contact-id"));
 
   if (FORM_CONTAINER) {
     if (FORM) {

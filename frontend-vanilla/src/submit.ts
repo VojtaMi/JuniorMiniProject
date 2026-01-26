@@ -2,6 +2,7 @@ import { sendHttpRequest } from './apiComm'
 import { getErrorElement } from './helpers';
 import { initializeInputFields } from './inputs'
 import {FORM} from './helpers';
+import { displayContatPage } from './contactPage'
 
 // the function will submit contact on submit event
 // submits if the form passes the validity
@@ -50,6 +51,12 @@ export default function handleSubmit() {
                 // console.log(value.message);
                 setSubmitMessage(submitMsgElement, value.message, "success");
                 FORM!.reset();
+                if (method === "PATCH") {
+                    FORM!.removeAttribute("data-contact-id");
+                    setTimeout(() => {
+                        displayContatPage();
+                    }, 1000);
+                }
             })
             .catch((err) => {
                 setSubmitMessage(submitMsgElement, err, "error");
