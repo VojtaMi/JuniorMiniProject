@@ -126,7 +126,8 @@ function listenToContactEvents() {
         CONTACTS_LIST.querySelectorAll(".delete-btn").forEach((elem) => {
             elem.addEventListener("click", () => {
                 const closestLi = elem.closest("li");
-                console.log("delete " + closestLi?.dataset._id);
+                const contactID = closestLi?.dataset._id;
+                sendHttpRequest("DELETE", null, contactID);
                 closestLi!.style.display = "none";
             });
         });

@@ -1,16 +1,20 @@
 const API_URL = 'http://localhost:3333/api/contacts';
-export async function sendHttpRequest(method: string, data: object | null = null) {
+export async function sendHttpRequest(method: string, data: object | null = null, contact_id = '') {
+    let api_url = API_URL;
+    if (contact_id){
+        api_url += `/${encodeURIComponent(contact_id)}`;
+    }
     try {
         let response;
         if (data === null){
-            response = await fetch(API_URL, {
+            response = await fetch(api_url, {
                 method: method,
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
         }else{
-            response = await fetch(API_URL, {
+            response = await fetch(api_url, {
                 method: method,
                 body: JSON.stringify(data),
                 headers: {
