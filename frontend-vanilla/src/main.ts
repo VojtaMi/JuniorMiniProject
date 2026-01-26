@@ -32,6 +32,7 @@ if (!formHtmlElement) {
 
 
 
+
 // TODO: Implementovat aplikaci pro správu kontaktů
 //
 // 1. Vytvořit formulář pro vytvoření kontaktu

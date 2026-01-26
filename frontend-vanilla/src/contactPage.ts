@@ -99,9 +99,19 @@ export async function displayContatPage() {
         const response = await sendHttpRequest("GET");
         const data = response.data;
         displayContactList(data);
+        listenToContactEvents();
     } catch (error) {
         console.error('Failed to fetch page: ', error);
         alert(error);
     }
 }
 
+function listenToContactEvents() {
+    CONTACTS_LIST.querySelectorAll(".delete-btn").forEach( (elem) => {
+        elem.addEventListener("click",  () => {
+            console.log("delete");
+            const closestDiv = elem.closest("li");
+            closestDiv!.style.display = "none";
+        });
+    });
+}
