@@ -33,7 +33,7 @@ export default function handleSubmit(root: HTMLFormElement, inputs: Record<strin
     }
 
         let submitMsgElement: HTMLElement | null;
-        const submitElement = root.querySelector<HTMLInputElement>('#submit-btn');
+        const submitElement = root.querySelector<HTMLInputElement>('#add-btn');
         if (submitElement) {
             submitMsgElement = getErrorElement(submitElement);
         }

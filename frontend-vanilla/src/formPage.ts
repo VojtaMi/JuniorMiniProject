@@ -23,6 +23,8 @@ export function displayForm() {
 
 export function displayFormPage() {
   hideContactList();
+  hideUpdateButton();
+  displayAddButton();
   if (FORM){
     FORM.reset();
   }
@@ -40,7 +42,38 @@ function  setInputValue(inputId: string, value: string) {
   }
 }
 
+function hideAddButton(){
+  const addBtn = document.getElementById("add-btn");
+  if (addBtn){
+    addBtn.style.display = "none";
+  }
+}
+
+function hideUpdateButton() {
+  const addBtn = document.getElementById("update-btn");
+  if (addBtn) {
+    addBtn.style.display = "none";
+  }
+}
+
+function displayAddButton() {
+  const addBtn = document.getElementById("add-btn");
+  if (addBtn) {
+    addBtn.style.display = "block";
+  }
+}
+
+function displayUpdateButton() {
+  const addBtn = document.getElementById("update-btn");
+  if (addBtn) {
+    addBtn.style.display = "block";
+  }
+}
+
 export function fillFromSaved(contact: Contact) {
+  hideAddButton();
+  displayUpdateButton();
+
   if (FORM_CONTAINER) {
     if (FORM) {
       FORM.reset();
