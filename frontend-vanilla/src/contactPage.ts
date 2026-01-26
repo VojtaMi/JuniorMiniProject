@@ -20,7 +20,7 @@ function fillDetails(node: DocumentFragment, contact: Contact){
     summary!.textContent = fullName;
     
     // displays non empty fields for details
-    const fields: (keyof Contact)[] = ["email", "gender","phone", "city", "street", "zipCode", "houseNumber", "note"];
+    const fields: (keyof Contact)[] = ["email", "birthDate", "gender","phone", "city", "street", "zipCode", "houseNumber", "note"];
     for (const field of fields){
         const fieldHtmlElement = node.querySelector(`#field-${field}`);
         if (fieldHtmlElement){
@@ -34,7 +34,8 @@ function fillDetails(node: DocumentFragment, contact: Contact){
     }
 
     const birthDateHtmlElement = node.querySelector(`#field-birthDate`);
-    if (birthDateHtmlElement){
+    if (birthDateHtmlElement) {
+        console.log("birthDate " + contact.birthDate);
         birthDateHtmlElement.textContent = cutDateToYYYYMMDD(contact.birthDate);
     }
 }
