@@ -45,6 +45,30 @@ function fillDetails(node: DocumentFragment, contact: Contact){
     }
 }
 
+function generalizeClickArea(e: Event, li: HTMLLIElement, summary: HTMLElement){
+    {
+        const target = e.target as HTMLElement;
+
+        // 1) Let native behavior work if clicking <summary>
+        if (target.closest('summary')) return;
+
+        // 2) Ignore when user is selecting text
+        const sel = window.getSelection();
+        if (sel && !sel.isCollapsed) {
+            const { anchorNode, focusNode } = sel;
+            if ((anchorNode && li.contains(anchorNode)) || (focusNode && li.contains(focusNode))) {
+                return;
+            }
+        }
+        // 3) Ignore clicks on buttons
+        if (target.closest('button')) return;
+
+        // 4) Otherwise, toggle
+        summary!.click();
+
+    }
+}
+
 async function displayContactList(contacts: Contact[]) {
     if (CONTACTS_LIST && CONTACT_TPL) {
         CONTACTS_LIST.innerHTML = "";
@@ -58,28 +82,9 @@ async function displayContactList(contacts: Contact[]) {
             fillDetails(node, contact);
 
             li.addEventListener('click', (e) => {
-                const target = e.target as HTMLElement;
-
-                // 1) Let native behavior work if clicking <summary>
-                if (target.closest('summary')) return;
-
-                // 2) Ignore when user is selecting text
-                const sel = window.getSelection();
-                if (sel && !sel.isCollapsed) {
-                    const { anchorNode, focusNode } = sel;
-                    if ((anchorNode && li.contains(anchorNode)) || (focusNode && li.contains(focusNode))) {
-                        return;
-                    }
-                }
-                // 3) Ignore clicks on buttons
-                if (target.closest('button')) return;
-
-                // 4) Otherwise, toggle
-                summary!.click();
-
+                generalizeClickArea(e, li, summary);
             });
 
-            // 3. Append to list
             CONTACTS_LIST.appendChild(node);
         });
 
