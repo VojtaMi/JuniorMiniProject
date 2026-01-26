@@ -35,7 +35,6 @@ function fillDetails(node: DocumentFragment, contact: Contact){
 
     const birthDateHtmlElement = node.querySelector(`#field-birthDate`);
     if (birthDateHtmlElement) {
-        console.log("birthDate " + contact.birthDate);
         birthDateHtmlElement.textContent = cutDateToYYYYMMDD(contact.birthDate);
     }
 }
