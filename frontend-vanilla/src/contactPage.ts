@@ -30,19 +30,14 @@ function fillDetails(node: DocumentFragment, contact: Contact){
     const fullName = `${contact.firstName} ${contact.lastName}`;
     summary!.textContent = fullName;
     
+    // displays non empty fields for details
     const fields: (keyof Contact)[] = ["email", "gender", "birthDate", "phone", "city", "street", "zipCode", "houseNumber", "note"];
     for (const field of fields){
         const fieldHtmlElement = node.querySelector(`#field-${field}`);
         if (fieldHtmlElement){
-            console.log("here "+ fieldHtmlElement.id);
             if (contact[field]) {
-                console.log("if " + contact[field]);
-                console.log(contact[field]);
-                if (fieldHtmlElement) {
-                    fieldHtmlElement.textContent = contact[field];
-                }
+                fieldHtmlElement.textContent = contact[field];
             } else {
-                console.log("else");
                 const closestDiv = fieldHtmlElement.closest("div");
                 closestDiv!.style.display = "none";
             }
@@ -109,3 +104,4 @@ export async function displayContatPage() {
         alert(error);
     }
 }
+
