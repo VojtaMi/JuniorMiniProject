@@ -55,6 +55,13 @@ export function fillFromSaved(contact: Contact) {
     setInputValue("zipCode", contact.zipCode);
     setInputValue("note", contact.note);
     setInputValue("birthDate", cutDateToYYYYMMDD(contact.birthDate));
+
+    const genderInput = FORM_CONTAINER.querySelector(
+      `input[name="gender"][value="${contact.gender}"]`
+    ) as HTMLInputElement | null;
+    if (genderInput) {
+      genderInput.checked = true;
+    }
     
   }
 }
