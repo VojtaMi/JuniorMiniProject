@@ -77,6 +77,10 @@ async function displayContactList(contacts: Contact[]) {
         contacts.forEach(contact => {
             const node = CONTACT_TPL.content.cloneNode(true) as DocumentFragment;
             const summary = node.querySelector("summary");
+            if (!summary){
+                console.warn("HTML definition issue - missing summary in template definition")
+                return;
+            }
             const li = node.querySelector('li') as HTMLLIElement;
 
             fillDetails(node, contact);
