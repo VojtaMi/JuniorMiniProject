@@ -2,7 +2,6 @@ import { sendHttpRequest } from './apiComm'
 import { hideForm, displayForm, fillFromSaved } from './formPage'
 import { Contact } from './types'
 import { cutDateToYYYYMMDD } from './helpers'
-import { ca } from 'intl-tel-input/i18n';
 
 const CONTACTS_LIST = document.getElementById("contacts-list");
 if (CONTACTS_LIST === null) {
