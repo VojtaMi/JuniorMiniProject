@@ -122,13 +122,7 @@ export async function displayContatPage() {
 }
 
 function getContactSummary(li: HTMLLIElement){
-
-    // Find the <summary> inside this <li>
-    const summaryEl = li.querySelector('details > summary');
-
-    // Get the text safely with a fallback
-    return summaryEl?.textContent.trim() || 'this contact';
-
+    return li.querySelector('details > summary');
 }
 
 function listenToDeleteContact(contact_list: HTMLElement){
