@@ -2,6 +2,7 @@ import { sendHttpRequest } from './apiComm'
 import { hideForm, displayForm, fillFromSaved } from './formPage'
 import { Contact } from './types'
 import { cutDateToYYYYMMDD } from './helpers'
+import { ca } from 'intl-tel-input/i18n';
 
 const CONTACTS_LIST = document.getElementById("contacts-list");
 if (CONTACTS_LIST === null) {
@@ -120,12 +121,19 @@ function getContactSummary(li: HTMLLIElement){
 
 function listenToDeleteContact(contact_list: HTMLElement){
     contact_list.querySelectorAll(".delete-btn").forEach((elem) => {
-        elem.addEventListener("click", () => {
+        elem.addEventListener("click", async () => {
             const closestLi = elem.closest("li");
-            if (window.confirm(`Do you really want to delete contact ${getContactSummary(closestLi!)}`)){
+            const contactName = getContactSummary(closestLi!)?.textContent;
+            if (window.confirm(`Do you really want to delete contact ${contactName}`)){
                 const contactID = closestLi?.dataset._id;
-                sendHttpRequest("DELETE", null, contactID);
-                closestLi!.style.display = "none";
+                try{
+                    await sendHttpRequest("DELETE", null, contactID);
+                    closestLi!.style.display = "none";
+                }
+                catch(error){
+                    console.error('Failed to delete contact: ', error);
+                    alert(error);
+                }
             }
         });
     });
@@ -141,8 +149,7 @@ function listenToUpdateContact(contact_list: HTMLElement) {
             displayForm();
             const response = await sendHttpRequest("GET", null, contactID);
             const data = response.data;
-            fillFromSaved(data);
-            
+            fillFromSaved(data);    
         });
     });
 }

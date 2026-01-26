@@ -5,7 +5,7 @@ import {FORM} from './helpers';
 import { displayContatPage } from './contactPage'
 
 // the function will submit contact on submit event
-// submits if the form passes the validity
+// submits if the form passes the default validity check
 export default function handleSubmit() {
     if (!FORM){
         return;
@@ -48,7 +48,6 @@ export default function handleSubmit() {
        
         sendHttpRequest(method, contact, contactID)
             .then((value) => {
-                // console.log(value.message);
                 setSubmitMessage(submitMsgElement, value.message, "success");
                 FORM!.reset();
                 if (method === "PATCH") {

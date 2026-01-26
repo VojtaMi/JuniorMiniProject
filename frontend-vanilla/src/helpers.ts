@@ -1,5 +1,5 @@
 
-// resolves error element via aria-describedby, then falls back to `${input.id}-error`
+// resolves error element via aria-describedby
 export function getErrorElement(input: HTMLInputElement): HTMLElement | null {
   const describedBy = input.getAttribute('aria-describedby');
   if (describedBy) {

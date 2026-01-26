@@ -1,9 +1,14 @@
 const API_URL = 'http://localhost:3333/api/contacts';
-export async function sendHttpRequest(method: string, data: object | null = null, contact_id = '') {
-    let api_url = API_URL;
-    if (contact_id){
-        api_url += `/${encodeURIComponent(contact_id)}`;
+
+function completeUrl(url: string, contact_id: string): string {
+    if (contact_id) {
+        url += `/${encodeURIComponent(contact_id)}`;
     }
+    return url;
+}
+
+export async function sendHttpRequest(method: string, data: object | null = null, contact_id = '') {
+    const api_url = completeUrl(API_URL, contact_id);
     try {
         let response;
         if (data === null){
@@ -28,7 +33,7 @@ export async function sendHttpRequest(method: string, data: object | null = null
         } else {
             return response.json().then(errData => {
                 console.log(errData);
-                throw new Error('Something went wrong - server side')
+                throw new Error(errData.message || 'Something went wrong - server side!');
             });
         }
     } catch (error) {
