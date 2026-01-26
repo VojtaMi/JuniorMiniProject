@@ -1,5 +1,6 @@
 import { sendHttpRequest } from './apiComm'
-import { hideForm } from './formPage'
+import { hideForm, displayForm, fillFromSaved } from './formPage'
+import { Contact } from './types'
 
 const CONTACTS_LIST = document.getElementById("contacts-list");
 if (CONTACTS_LIST === null) {
@@ -10,20 +11,6 @@ const CONTACT_TPL = document.getElementById("contact-item-tpl") as HTMLTemplateE
 if (CONTACT_TPL === null) {
     console.warn('#contact-tpl not found')
 }
-type Contact = { 
-    firstName: string; 
-    lastName: string; 
-    email: string; 
-    gender: string;
-    birthDate: string;
-    phone: string;
-    city: string;
-    street: string;
-    houseNumber: string;
-    zipCode: string;
-    note: string;
-    _id : string;
-};
 
 function fillDetails(node: DocumentFragment, contact: Contact){
     const summary = node.querySelector("summary");
@@ -136,11 +123,27 @@ function listenToDeleteContact(contact_list: HTMLElement){
             }
         });
     });
+}
 
+function listenToUpdateContact(contact_list: HTMLElement) {
+    contact_list.querySelectorAll(".update-btn").forEach((elem) => {
+        elem.addEventListener("click", async () => {
+            const closestLi = elem.closest("li");
+            const contactID = closestLi?.dataset._id;
+
+            hideContactList();
+            displayForm();
+            const response = await sendHttpRequest("GET", null, contactID);
+            const data = response.data;
+            fillFromSaved(data);
+            
+        });
+    });
 }
 
 function listenToContactEvents() {
     if (CONTACTS_LIST){
         listenToDeleteContact(CONTACTS_LIST);
+        listenToUpdateContact(CONTACTS_LIST);
     }
 }
