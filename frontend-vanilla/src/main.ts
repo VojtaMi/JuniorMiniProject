@@ -1,5 +1,4 @@
 import './styles/main.css';
-import { initializeInputFields } from './inputs'
 import handleSubmit from './submit'
 import { displayContatPage } from './contactPage'
 import { displayFormPage } from './formPage'
@@ -25,8 +24,7 @@ const formHtmlElement = document.querySelector('#contact-form') as HTMLFormEleme
 if (!formHtmlElement) {
   console.warn('Form #contact-form not found.');
 } else {
-  const inputs = initializeInputFields(formHtmlElement);
-  handleSubmit(formHtmlElement, inputs);
+  handleSubmit();
 }
 
 

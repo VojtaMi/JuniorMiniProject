@@ -1,12 +1,7 @@
 import { hideContactList } from './contactPage'
 import { Contact } from './types'
 import { cutDateToYYYYMMDD } from './helpers'
-
-const FORM_CONTAINER = document.getElementById("contact-form-container");
-if (FORM_CONTAINER === null) {
-  console.warn('#contact-form-container not found')
-}
-const FORM = FORM_CONTAINER?.querySelector('#contact-form') as HTMLFormElement | null;
+import { FORM, FORM_CONTAINER } from './helpers';
 
 const SUBMIT_BTN = document.getElementById("submit-btn");
 
@@ -26,14 +21,14 @@ export function displayForm() {
 export function displayFormPage() {
   nameSubmitButton("Add");
   hideContactList();
-  if (FORM){
+  if (FORM) {
     FORM.reset();
   }
   displayForm();
 }
 
-function  setInputValue(inputId: string, value: string) {
-  if (value){
+function setInputValue(inputId: string, value: string) {
+  if (value) {
     if (FORM_CONTAINER) {
       const inputElement = FORM_CONTAINER.querySelector(`#${inputId}`) as HTMLInputElement;
       if (inputElement) {
@@ -51,6 +46,8 @@ function nameSubmitButton(operationType: string) {
 
 export function fillFromSaved(contact: Contact) {
   nameSubmitButton("Update");
+  FORM?.setAttribute("data-contact-id", contact._id);
+  console.log(FORM?.getAttribute("data-contact-id"));
 
   if (FORM_CONTAINER) {
     if (FORM) {
@@ -73,6 +70,5 @@ export function fillFromSaved(contact: Contact) {
     if (genderInput) {
       genderInput.checked = true;
     }
-    
   }
 }

@@ -30,3 +30,13 @@ export function cutDateToYYYYMMDD(dateStr: string): string {
     return "";
   }
 } 
+
+export const FORM_CONTAINER = document.getElementById("contact-form");
+if (FORM_CONTAINER === null) {
+  console.warn('#contact-form-container not found')
+}
+
+export const FORM = document.getElementById("contact-form") as HTMLFormElement | null;
+if (FORM === null) {
+  console.warn('#contact-form not found')
+}
