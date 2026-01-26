@@ -121,15 +121,32 @@ export async function displayContatPage() {
     }
 }
 
-function listenToContactEvents() {
-    if (CONTACTS_LIST){
-        CONTACTS_LIST.querySelectorAll(".delete-btn").forEach((elem) => {
-            elem.addEventListener("click", () => {
-                const closestLi = elem.closest("li");
+function getContactSummary(li: HTMLLIElement){
+
+    // Find the <summary> inside this <li>
+    const summaryEl = li.querySelector('details > summary');
+
+    // Get the text safely with a fallback
+    return summaryEl?.textContent.trim() || 'this contact';
+
+}
+
+function listenToDeleteContact(contact_list: HTMLElement){
+    contact_list.querySelectorAll(".delete-btn").forEach((elem) => {
+        elem.addEventListener("click", () => {
+            const closestLi = elem.closest("li");
+            if (window.confirm(`Do you really want to delete contact ${getContactSummary(closestLi!)}`)){
                 const contactID = closestLi?.dataset._id;
                 sendHttpRequest("DELETE", null, contactID);
                 closestLi!.style.display = "none";
-            });
+            }
         });
+    });
+
+}
+
+function listenToContactEvents() {
+    if (CONTACTS_LIST){
+        listenToDeleteContact(CONTACTS_LIST);
     }
 }
