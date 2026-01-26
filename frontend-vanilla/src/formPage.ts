@@ -25,6 +25,7 @@ export function displayForm() {
 
 export function displayFormPage() {
   nameSubmitButton("Add");
+  hideContactList();
   if (FORM){
     FORM.reset();
   }
