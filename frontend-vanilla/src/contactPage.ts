@@ -22,6 +22,7 @@ type Contact = {
     houseNumber: string;
     zipCode: string;
     note: string;
+    _id : string;
 };
 
 function fillDetails(node: DocumentFragment, contact: Contact){
@@ -69,6 +70,10 @@ function generalizeClickArea(e: Event, li: HTMLLIElement, summary: HTMLElement){
     }
 }
 
+function identifyDisplayedContact(li: HTMLLIElement, contact: Contact){
+    li.dataset._id = contact._id;
+}
+
 async function displayContactList(contacts: Contact[]) {
     if (CONTACTS_LIST && CONTACT_TPL) {
         CONTACTS_LIST.innerHTML = "";
@@ -84,6 +89,7 @@ async function displayContactList(contacts: Contact[]) {
             const li = node.querySelector('li') as HTMLLIElement;
 
             fillDetails(node, contact);
+            identifyDisplayedContact(li, contact);
 
             li.addEventListener('click', (e) => {
                 generalizeClickArea(e, li, summary);
@@ -116,11 +122,13 @@ export async function displayContatPage() {
 }
 
 function listenToContactEvents() {
-    CONTACTS_LIST.querySelectorAll(".delete-btn").forEach( (elem) => {
-        elem.addEventListener("click",  () => {
-            console.log("delete");
-            const closestDiv = elem.closest("li");
-            closestDiv!.style.display = "none";
+    if (CONTACTS_LIST){
+        CONTACTS_LIST.querySelectorAll(".delete-btn").forEach((elem) => {
+            elem.addEventListener("click", () => {
+                const closestLi = elem.closest("li");
+                console.log("delete " + closestLi?.dataset._id);
+                closestLi!.style.display = "none";
+            });
         });
-    });
+    }
 }
