@@ -8,6 +8,8 @@ if (FORM_CONTAINER === null) {
 }
 const FORM = FORM_CONTAINER?.querySelector('#contact-form') as HTMLFormElement | null;
 
+const SUBMIT_BTN = document.getElementById("submit-btn");
+
 
 export function hideForm() {
   if (FORM_CONTAINER) {
@@ -22,9 +24,7 @@ export function displayForm() {
 }
 
 export function displayFormPage() {
-  hideContactList();
-  hideUpdateButton();
-  displayAddButton();
+  nameSubmitButton("Add");
   if (FORM){
     FORM.reset();
   }
@@ -42,37 +42,14 @@ function  setInputValue(inputId: string, value: string) {
   }
 }
 
-function hideAddButton(){
-  const addBtn = document.getElementById("add-btn");
-  if (addBtn){
-    addBtn.style.display = "none";
-  }
-}
-
-function hideUpdateButton() {
-  const addBtn = document.getElementById("update-btn");
-  if (addBtn) {
-    addBtn.style.display = "none";
-  }
-}
-
-function displayAddButton() {
-  const addBtn = document.getElementById("add-btn");
-  if (addBtn) {
-    addBtn.style.display = "block";
-  }
-}
-
-function displayUpdateButton() {
-  const addBtn = document.getElementById("update-btn");
-  if (addBtn) {
-    addBtn.style.display = "block";
+function nameSubmitButton(operationType: string) {
+  if (SUBMIT_BTN) {
+    SUBMIT_BTN.textContent = operationType + " Contact";
   }
 }
 
 export function fillFromSaved(contact: Contact) {
-  hideAddButton();
-  displayUpdateButton();
+  nameSubmitButton("Update");
 
   if (FORM_CONTAINER) {
     if (FORM) {
