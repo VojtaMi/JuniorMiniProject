@@ -1,17 +1,17 @@
 import { sendHttpRequest } from './apiComm'
 import { getErrorElement } from './helpers';
 import { initializeInputFields } from './inputs'
-import {FORM} from './helpers';
+import {form} from './helpers';
 import { displayContatPage } from './contactPage'
 
 // the function will submit contact on submit event
 // submits if the form passes the default validity check
 export default function handleSubmit() {
-    if (!FORM){
+    if (!form){
         return;
     }
-    const inputs = initializeInputFields(FORM);
-    FORM.addEventListener('submit', event => {
+    const inputs = initializeInputFields(form);
+    form.addEventListener('submit', event => {
         event.preventDefault();
         const contact = {
             firstName: inputs.getFirstName(),
@@ -38,34 +38,37 @@ export default function handleSubmit() {
         }
 
         let submitMsgElement: HTMLElement | null;
-        const submitElement = FORM!.querySelector<HTMLInputElement>('#submit-btn');
-        if (submitElement) {
-            submitMsgElement = getErrorElement(submitElement);
-        }
-
-        const contactID = FORM!.getAttribute("data-contact-id") || '';
-        const method = contactID ? "PATCH" : "POST";
-       
-        sendHttpRequest(method, contact, contactID)
-            .then((value) => {
-                setSubmitMessage(submitMsgElement, value.message, "success");
-                FORM!.reset();
-                if (method === "PATCH") {
-                    FORM!.removeAttribute("data-contact-id");
-                    setTimeout(() => {
-                        displayContatPage();
-                    }, 1000);
-                }
-            })
-            .catch((err) => {
-                setSubmitMessage(submitMsgElement, err, "error");
+        if (form){
+            const submitElement = form.querySelector<HTMLInputElement>('#submit-btn');
+            if (submitElement) {
+                submitMsgElement = getErrorElement(submitElement);
             }
-            )
-            .finally(() => {
-                setTimeout(() => {
-                    setSubmitMessage(submitMsgElement, "")
-                }, 3000);
-            });
+
+            const contactID = form.getAttribute("data-contact-id") || '';
+            const method = contactID ? "PATCH" : "POST";
+
+            sendHttpRequest(method, contact, contactID)
+                .then((value) => {
+                    setSubmitMessage(submitMsgElement, value.message, "success");
+                    form?.reset();
+                    if (method === "PATCH") {
+                        form?.removeAttribute("data-contact-id");
+                        setTimeout(() => {
+                            displayContatPage();
+                        }, 1000);
+                    }
+                })
+                .catch((err) => {
+                    setSubmitMessage(submitMsgElement, err, "error");
+                }
+                )
+                .finally(() => {
+                    setTimeout(() => {
+                        setSubmitMessage(submitMsgElement, "")
+                    }, 3000);
+                });
+        }
+        
         
     });
 }
