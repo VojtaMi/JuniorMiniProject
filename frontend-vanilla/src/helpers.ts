@@ -31,12 +31,12 @@ export function cutDateToYYYYMMDD(dateStr: string): string {
   }
 } 
 
-export const FORM_CONTAINER = document.getElementById("contact-form");
-if (FORM_CONTAINER === null) {
+export const formContainer = document.getElementById("contact-form");
+if (formContainer === null) {
   console.warn('#contact-form-container not found')
 }
 
-export const FORM = document.getElementById("contact-form") as HTMLFormElement | null;
-if (FORM === null) {
+export const form = document.getElementById("contact-form") as HTMLFormElement | null;
+if (form === null) {
   console.warn('#contact-form not found')
 }

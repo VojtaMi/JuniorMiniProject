@@ -1,36 +1,36 @@
 import { hideContactList } from './contactPage'
 import { Contact } from './types'
 import { cutDateToYYYYMMDD } from './helpers'
-import { FORM, FORM_CONTAINER } from './helpers';
+import { form, formContainer } from './helpers';
 
 const SUBMIT_BTN = document.getElementById("submit-btn");
 
 
 export function hideForm() {
-  if (FORM_CONTAINER) {
-    FORM_CONTAINER.style.display = "none";
+  if (formContainer) {
+    formContainer.style.display = "none";
   }
 }
 
 export function displayForm() {
-  if (FORM_CONTAINER) {
-    FORM_CONTAINER.style.display = "block";
+  if (formContainer) {
+    formContainer.style.display = "block";
   }
 }
 
 export function displayFormPage() {
   nameSubmitButton("Add");
   hideContactList();
-  if (FORM) {
-    FORM.reset();
+  if (form) {
+    form.reset();
   }
   displayForm();
 }
 
 function setInputValue(inputId: string, value: string) {
   if (value) {
-    if (FORM_CONTAINER) {
-      const inputElement = FORM_CONTAINER.querySelector(`#${inputId}`) as HTMLInputElement;
+    if (formContainer) {
+      const inputElement = formContainer.querySelector(`#${inputId}`) as HTMLInputElement;
       if (inputElement) {
         inputElement.value = value;
       }
@@ -46,11 +46,11 @@ function nameSubmitButton(operationType: string) {
 
 export function fillFromSaved(contact: Contact) {
   nameSubmitButton("Update");
-  FORM?.setAttribute("data-contact-id", contact._id);
+  form?.setAttribute("data-contact-id", contact._id);
 
-  if (FORM_CONTAINER) {
-    if (FORM) {
-      FORM.reset();
+  if (formContainer) {
+    if (form) {
+      form.reset();
     }
     setInputValue("firstName", contact.firstName);
     setInputValue("lastName", contact.lastName);
@@ -63,7 +63,7 @@ export function fillFromSaved(contact: Contact) {
     setInputValue("note", contact.note);
     setInputValue("birthDate", cutDateToYYYYMMDD(contact.birthDate));
 
-    const genderInput = FORM_CONTAINER.querySelector(
+    const genderInput = formContainer.querySelector(
       `input[name="gender"][value="${contact.gender}"]`
     ) as HTMLInputElement | null;
     if (genderInput) {
