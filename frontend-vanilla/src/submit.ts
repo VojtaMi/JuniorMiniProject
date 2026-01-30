@@ -38,34 +38,37 @@ export default function handleSubmit() {
         }
 
         let submitMsgElement: HTMLElement | null;
-        const submitElement = form!.querySelector<HTMLInputElement>('#submit-btn');
-        if (submitElement) {
-            submitMsgElement = getErrorElement(submitElement);
-        }
-
-        const contactID = form!.getAttribute("data-contact-id") || '';
-        const method = contactID ? "PATCH" : "POST";
-       
-        sendHttpRequest(method, contact, contactID)
-            .then((value) => {
-                setSubmitMessage(submitMsgElement, value.message, "success");
-                form!.reset();
-                if (method === "PATCH") {
-                    form!.removeAttribute("data-contact-id");
-                    setTimeout(() => {
-                        displayContatPage();
-                    }, 1000);
-                }
-            })
-            .catch((err) => {
-                setSubmitMessage(submitMsgElement, err, "error");
+        if (form){
+            const submitElement = form.querySelector<HTMLInputElement>('#submit-btn');
+            if (submitElement) {
+                submitMsgElement = getErrorElement(submitElement);
             }
-            )
-            .finally(() => {
-                setTimeout(() => {
-                    setSubmitMessage(submitMsgElement, "")
-                }, 3000);
-            });
+
+            const contactID = form.getAttribute("data-contact-id") || '';
+            const method = contactID ? "PATCH" : "POST";
+
+            sendHttpRequest(method, contact, contactID)
+                .then((value) => {
+                    setSubmitMessage(submitMsgElement, value.message, "success");
+                    form?.reset();
+                    if (method === "PATCH") {
+                        form?.removeAttribute("data-contact-id");
+                        setTimeout(() => {
+                            displayContatPage();
+                        }, 1000);
+                    }
+                })
+                .catch((err) => {
+                    setSubmitMessage(submitMsgElement, err, "error");
+                }
+                )
+                .finally(() => {
+                    setTimeout(() => {
+                        setSubmitMessage(submitMsgElement, "")
+                    }, 3000);
+                });
+        }
+        
         
     });
 }
