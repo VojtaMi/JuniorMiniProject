@@ -1,12 +1,6 @@
 import { useState } from "react";
 import { ZodType } from "zod";
-
-interface UseInputReturn {
-    value: string;
-    handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handleInputBlur: () => void;
-    errorMsg: string;
-}
+import { UseInputReturn } from "../types/input";
 
 export function useInput(
     defaultValue: string,

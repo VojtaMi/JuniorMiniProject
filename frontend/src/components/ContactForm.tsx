@@ -43,16 +43,14 @@ export const ContactForm: FC<ContactFormProps> = ({ onSubmit, initialData }) => 
   // - Použít připravený contactsApi.createContact() nebo contactsApi.updateContact()
   // - Pro přístup k API klientu: import { contactsApi } from '../api/contactsApi'
 
+  const emailHook = useInput('', formSchema.shape.email);
+  const firstNameHook = useInput('', formSchema.shape.nonEmpty);
+  const secondNameHook = useInput('', formSchema.shape.nonEmpty);
+  
+
   function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
   }
-
-  const {
-    value: emailValue,
-    handleInputChange: handleEmailChange,
-    handleInputBlur: handleEmailBlur,
-    errorMsg: emailErrorMsg
-  } = useInput('', formSchema.shape.email);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -63,6 +61,8 @@ export const ContactForm: FC<ContactFormProps> = ({ onSubmit, initialData }) => 
         id='firstName'
         name='firstName'
         type='text'
+        required
+        hook={firstNameHook}
       />
 
       <FormInput
@@ -70,6 +70,8 @@ export const ContactForm: FC<ContactFormProps> = ({ onSubmit, initialData }) => 
         id='lastName'
         name='lastName'
         type='text'
+        required
+        hook={secondNameHook}
       />
 
       <FormInput
@@ -77,10 +79,8 @@ export const ContactForm: FC<ContactFormProps> = ({ onSubmit, initialData }) => 
         id='email'
         name='email'
         type='email'
-        value={emailValue}
-        onChange={handleEmailChange}
-        onBlur={handleEmailBlur}
-        errorMsg={emailErrorMsg}
+        required
+        hook={emailHook}
       />
 
       <button className='submit-btn'>
