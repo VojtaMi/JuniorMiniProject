@@ -62,7 +62,7 @@ export const ContactForm: FC<ContactFormProps> = ({ onSubmit, initialData }) => 
         name='firstName'
         type='text'
         required
-        hook={firstNameHook}
+        formprops ={firstNameHook}
       />
 
       <FormInput
@@ -71,7 +71,7 @@ export const ContactForm: FC<ContactFormProps> = ({ onSubmit, initialData }) => 
         name='lastName'
         type='text'
         required
-        hook={secondNameHook}
+        formprops ={secondNameHook}
       />
 
       <FormInput
@@ -80,7 +80,7 @@ export const ContactForm: FC<ContactFormProps> = ({ onSubmit, initialData }) => 
         name='email'
         type='email'
         required
-        hook={emailHook}
+        formprops ={emailHook}
       />
 
       <button className='submit-btn'>

@@ -4,7 +4,7 @@ import { UseInputReturn } from "../types/input";
 import { Contact } from "../types/contact";
 
 function findDefaultValue(prefilledInputs: Contact | undefined, inputType: keyof Contact){
-    return prefilledInputs?.[inputType] ?? ''
+    return prefilledInputs?.[inputType]?.toString() ?? ''
 }
 
 export function useInput(

@@ -1,6 +1,6 @@
 import { FormInputProps } from "../types/input";
-export default function FormInput({ label, id, hook, ...props }: FormInputProps ) {
-    const { value, handleInputChange, handleInputBlur, errorMsg } = hook;
+export default function FormInput({ label, id, formprops , ...props }: FormInputProps ) {
+    const { value, handleInputChange, handleInputBlur, errorMsg } = formprops ;
     
     return (
         <div>

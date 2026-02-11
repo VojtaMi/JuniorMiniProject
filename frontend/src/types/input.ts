@@ -9,5 +9,5 @@ export type FormInputProps =
     Omit<React.ComponentProps<'input'>, "value" | "onChange" | "onBlur"> & {
         label: string;
         id: string;
-        hook: UseInputReturn;
+        formprops : UseInputReturn;
     };
