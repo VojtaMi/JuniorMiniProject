@@ -29,9 +29,8 @@ export function debounce<T extends (...args: any[]) => void>(
 export function cutDateToYYYYMMDD(dateStr: string): string {
   if (dateStr) {
     return dateStr.slice(0, 10);
-  } else {
-    return "";
   }
+  return "";
 }
 
 export const formContainer = document.getElementById("contact-form");

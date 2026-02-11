@@ -1,8 +1,7 @@
 import type { FC } from "react";
-import { useInput } from "../hooks/useInput";
 import type { Contact } from "../types/contact";
-import { formSchema } from "../utils/validators";
 import FormInput from "./FormInput";
+import { useContactFormInputs } from "../hooks/useContactFormInputs";
 
 interface ContactFormProps {
   onSubmit: (contact: Omit<Contact, "_id" | "create_date">) => void;
@@ -45,21 +44,12 @@ export const ContactForm: FC<ContactFormProps> = ({
   // - Použít připravený contactsApi.createContact() nebo contactsApi.updateContact()
   // - Pro přístup k API klientu: import { contactsApi } from '../api/contactsApi'
 
-  const emailProps = useInput(initialData, "email", formSchema.shape.email);
-  const firstNameProps = useInput(
-    initialData,
-    "firstName",
-    formSchema.shape.nonEmpty
-  );
-  const secondNameProps = useInput(
-    initialData,
-    "lastName",
-    formSchema.shape.nonEmpty
-  );
-
   function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
   }
+
+  const { firstNameProps, secondNameProps, emailProps } =
+    useContactFormInputs(initialData);
 
   return (
     <form onSubmit={handleSubmit}>
