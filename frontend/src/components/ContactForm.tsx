@@ -43,9 +43,9 @@ export const ContactForm: FC<ContactFormProps> = ({ onSubmit, initialData }) => 
   // - Použít připravený contactsApi.createContact() nebo contactsApi.updateContact()
   // - Pro přístup k API klientu: import { contactsApi } from '../api/contactsApi'
 
-  const emailHook = useInput('', formSchema.shape.email);
-  const firstNameHook = useInput('', formSchema.shape.nonEmpty);
-  const secondNameHook = useInput('', formSchema.shape.nonEmpty);
+  const emailHook = useInput(initialData, 'email', formSchema.shape.email);
+  const firstNameHook = useInput(initialData, 'firstName', formSchema.shape.nonEmpty);
+  const secondNameHook = useInput(initialData, 'lastName', formSchema.shape.nonEmpty);
   
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {

@@ -1,11 +1,18 @@
 import { useState } from "react";
 import { ZodType } from "zod";
 import { UseInputReturn } from "../types/input";
+import { Contact } from "../types/contact";
+
+function findDefaultValue(prefilledInputs: Contact | undefined, inputType: keyof Contact){
+    return prefilledInputs ? String(prefilledInputs[inputType]) : ''
+}
 
 export function useInput(
-    defaultValue: string,
+    prefilledInputs: Contact | undefined,
+    inputType: keyof Contact,
     schema: ZodType
 ): UseInputReturn {
+    const defaultValue = findDefaultValue(prefilledInputs, inputType)
     const [enteredValue, setEnteredValue] = useState(defaultValue);
     const [didEdit, setDidEdit] = useState(false);
 
