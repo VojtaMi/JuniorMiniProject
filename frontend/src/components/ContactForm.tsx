@@ -1,7 +1,7 @@
 import type { FC } from "react";
-import type { UseInputReturn } from "../types/input";
 import { useContactFormInputs } from "../hooks/useContactFormInputs";
 import type { Contact } from "../types/contact";
+import type { UseInputReturn } from "../types/input";
 import FormInput from "./FormInput";
 
 interface ContactFormProps {
@@ -47,33 +47,31 @@ export const ContactForm: FC<ContactFormProps> = ({
   const contactInputProps = useContactFormInputs(initialData);
   const { firstNameProps, lastNameProps, emailProps } = contactInputProps;
 
-function allInputsValid(inputProps: Record<string, UseInputReturn>): boolean {
-  return Object.values(inputProps).every(({isValid}) => isValid);
-}
-
-function displayLatentErrors(
-  inputProps: Record<string, UseInputReturn>
-): void {
-  for (const inputProp of Object.values(inputProps)) {
-    inputProp.setAsTouched()
+  function allInputsValid(inputProps: Record<string, UseInputReturn>): boolean {
+    return Object.values(inputProps).every(({ isValid }) => isValid);
   }
-  
-}
+
+  function displayLatentErrors(
+    inputProps: Record<string, UseInputReturn>
+  ): void {
+    for (const inputProp of Object.values(inputProps)) {
+      inputProp.setAsTouched();
+    }
+  }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
 
-    if (allInputsValid(contactInputProps)){
-         const formContact: Contact = {
-          firstName: firstNameProps.value,
-          lastName: lastNameProps.value,
-          email: emailProps.value,
-        };
-        onSubmit(formContact);
+    if (allInputsValid(contactInputProps)) {
+      const formContact: Contact = {
+        firstName: firstNameProps.value,
+        lastName: lastNameProps.value,
+        email: emailProps.value,
+      };
+      onSubmit(formContact);
+    } else {
+      displayLatentErrors(contactInputProps);
     }
-   else{
-    displayLatentErrors(contactInputProps);
-   }
   }
 
   return (
