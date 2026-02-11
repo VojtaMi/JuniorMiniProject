@@ -1,8 +1,8 @@
 import type { FC } from "react";
-import type { Contact } from "../types/contact";
-import FormInput from "./FormInput";
-import { formSchema } from "../utils/validators";
 import { useInput } from "../hooks/useInput";
+import type { Contact } from "../types/contact";
+import { formSchema } from "../utils/validators";
+import FormInput from "./FormInput";
 
 interface ContactFormProps {
   onSubmit: (contact: Omit<Contact, "_id" | "create_date">) => void;
@@ -45,13 +45,13 @@ export const ContactForm: FC<ContactFormProps> = ({
   // - Použít připravený contactsApi.createContact() nebo contactsApi.updateContact()
   // - Pro přístup k API klientu: import { contactsApi } from '../api/contactsApi'
 
-  const emailHook = useInput(initialData, "email", formSchema.shape.email);
-  const firstNameHook = useInput(
+  const emailProps = useInput(initialData, "email", formSchema.shape.email);
+  const firstNameProps = useInput(
     initialData,
     "firstName",
     formSchema.shape.nonEmpty
   );
-  const secondNameHook = useInput(
+  const secondNameProps = useInput(
     initialData,
     "lastName",
     formSchema.shape.nonEmpty
@@ -66,30 +66,30 @@ export const ContactForm: FC<ContactFormProps> = ({
       <h2>{initialData ? "Editace kontaktu" : "Nový kontakt"}</h2>
 
       <FormInput
-        label="Jméno"
+        formprops={firstNameProps}
         id="firstName"
+        label="Jméno"
         name="firstName"
-        type="text"
         required
-        formprops={firstNameHook}
+        type="text"
       />
 
       <FormInput
-        label="Příjmení"
+        formprops={secondNameProps}
         id="lastName"
+        label="Příjmení"
         name="lastName"
-        type="text"
         required
-        formprops={secondNameHook}
+        type="text"
       />
 
       <FormInput
-        label="E-mail"
+        formprops={emailProps}
         id="email"
+        label="E-mail"
         name="email"
-        type="email"
         required
-        formprops={emailHook}
+        type="email"
       />
 
       <button className="submit-btn">
