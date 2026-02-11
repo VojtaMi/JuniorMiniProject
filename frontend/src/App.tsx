@@ -23,10 +23,10 @@ function App() {
       <header>
         <h1>Správa kontaktů</h1>
         <nav>
-          <button onClick={() => setCurrentPage("form")}>
+          <button onClick={() => setCurrentPage("form")} type="button">
             Vytvořit kontakt
           </button>
-          <button onClick={() => setCurrentPage("list")}>
+          <button onClick={() => setCurrentPage("list")} type="button">
             Seznam kontaktů
           </button>
         </nav>

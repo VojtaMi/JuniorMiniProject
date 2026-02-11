@@ -31,14 +31,15 @@ export function useInput(
     setDidEdit(false);
   }
 
-  function handleInputBlur() {
+  function setAsTouched() {
     setDidEdit(true);
   }
 
   return {
     value: enteredValue,
     handleInputChange,
-    handleInputBlur,
+    setAsTouched,
     errorMsg: displayedErrorMessage,
+    isValid: valueIsValid,
   };
 }

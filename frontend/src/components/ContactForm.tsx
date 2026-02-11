@@ -1,7 +1,8 @@
 import type { FC } from "react";
+import type { UseInputReturn } from "../types/input";
+import { useContactFormInputs } from "../hooks/useContactFormInputs";
 import type { Contact } from "../types/contact";
 import FormInput from "./FormInput";
-import { useContactFormInputs } from "../hooks/useContactFormInputs";
 
 interface ContactFormProps {
   onSubmit: (contact: Omit<Contact, "_id" | "create_date">) => void;
@@ -43,13 +44,37 @@ export const ContactForm: FC<ContactFormProps> = ({
   // Použití:
   // - Použít připravený contactsApi.createContact() nebo contactsApi.updateContact()
   // - Pro přístup k API klientu: import { contactsApi } from '../api/contactsApi'
+  const contactInputProps = useContactFormInputs(initialData);
+  const { firstNameProps, lastNameProps, emailProps } = contactInputProps;
+
+function allInputsValid(inputProps: Record<string, UseInputReturn>): boolean {
+  return Object.values(inputProps).every(({isValid}) => isValid);
+}
+
+function displayLatentErrors(
+  inputProps: Record<string, UseInputReturn>
+): void {
+  for (const inputProp of Object.values(inputProps)) {
+    inputProp.setAsTouched()
+  }
+  
+}
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
-  }
 
-  const { firstNameProps, secondNameProps, emailProps } =
-    useContactFormInputs(initialData);
+    if (allInputsValid(contactInputProps)){
+         const formContact: Contact = {
+          firstName: firstNameProps.value,
+          lastName: lastNameProps.value,
+          email: emailProps.value,
+        };
+        onSubmit(formContact);
+    }
+   else{
+    displayLatentErrors(contactInputProps);
+   }
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -65,7 +90,7 @@ export const ContactForm: FC<ContactFormProps> = ({
       />
 
       <FormInput
-        formprops={secondNameProps}
+        formprops={lastNameProps}
         id="lastName"
         label="Příjmení"
         name="lastName"
@@ -82,7 +107,7 @@ export const ContactForm: FC<ContactFormProps> = ({
         type="email"
       />
 
-      <button className="submit-btn">
+      <button className="submit-btn" type="submit">
         {initialData ? "Potvrdit změny" : "Přidat kontakt"}
       </button>
     </form>

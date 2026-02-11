@@ -1,8 +1,9 @@
 export interface UseInputReturn {
   value: string;
   handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleInputBlur: () => void;
+  setAsTouched: () => void;
   errorMsg: string;
+  isValid: boolean;
 }
 
 export type FormInputProps = Omit<

@@ -5,7 +5,7 @@ export default function FormInput({
   formprops,
   ...props
 }: FormInputProps) {
-  const { value, handleInputChange, handleInputBlur, errorMsg } = formprops;
+  const { value, handleInputChange, setAsTouched, errorMsg } = formprops;
 
   return (
     <div>
@@ -13,7 +13,7 @@ export default function FormInput({
       <input
         className="form-control"
         id={id}
-        onBlur={handleInputBlur}
+        onBlur={setAsTouched}
         onChange={handleInputChange}
         value={value}
         {...props}

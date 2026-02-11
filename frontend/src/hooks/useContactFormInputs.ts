@@ -9,7 +9,7 @@ export function useContactFormInputs(initialData: Contact | undefined) {
     "firstName",
     formSchema.shape.nonEmpty
   );
-  const secondNameProps = useInput(
+  const lastNameProps = useInput(
     initialData,
     "lastName",
     formSchema.shape.nonEmpty
@@ -18,6 +18,6 @@ export function useContactFormInputs(initialData: Contact | undefined) {
   return {
     emailProps,
     firstNameProps,
-    secondNameProps,
+    lastNameProps,
   };
 }
