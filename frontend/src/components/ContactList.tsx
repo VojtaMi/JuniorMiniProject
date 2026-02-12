@@ -1,5 +1,7 @@
 import type { FC } from "react";
+import { useEffect, useState } from "react";
 import type { Contact } from "../types/contact";
+import { contactsApi } from "../api/contactsApi";
 
 interface ContactListProps {
   onContactSelect?: (contact: Contact) => void;
@@ -29,10 +31,51 @@ export const ContactList: FC<ContactListProps> = ({ onContactSelect }) => {
   // Použití API klientu:
   // import { contactsApi } from '../api/contactsApi'
 
+  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
+
+
+useEffect(() => {
+  let isActive = true;
+
+  const loadContacts = async () => {
+    try {
+      setIsFetching(true);
+      const data = await contactsApi.getAllContacts();
+      if (isActive) {
+        setContacts(data);
+      }
+    } catch {
+      if (isActive) {
+        setError("Failed to load contacts");
+      }
+    } finally {
+      if (isActive) {
+        setIsFetching(false);
+      }
+    }
+  };
+
+  loadContacts();
+
+  return () => {
+    isActive = false;
+  };
+}, []);
+
   return (
     <div>
       <h2>Seznam kontaktů</h2>
-      <p>TODO: Implementovat seznam</p>
+      {error && <p>{error}</p>}
+      {isFetching && <p>Načítám data kontaktů.</p>}
+      <ul>
+        {contacts.map((contact) => (
+          <li key={contact._id}>
+            {contact.firstName} {contact.lastName}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
