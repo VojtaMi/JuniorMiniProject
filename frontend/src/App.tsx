@@ -2,10 +2,8 @@ import { useState } from "react";
 import { ContactDetail } from "./components/ContactDetail";
 import { ContactForm } from "./components/ContactForm";
 import { ContactList } from "./components/ContactList";
-import type { Contact } from "./types/contact";
+import type { Contact, Page } from "./types/contact";
 import "./App.css";
-
-type Page = "form" | "list";
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>("form");
@@ -23,7 +21,7 @@ function App() {
       <header>
         <h1>Správa kontaktů</h1>
         <nav>
-          <button onClick={() => setCurrentPage("form")} type="button">
+          <button onClick={() => {setCurrentPage("form"); setSelectedContact(null)}} type="button">
             Vytvořit kontakt
           </button>
           <button onClick={() => setCurrentPage("list")} type="button">
@@ -50,7 +48,11 @@ function App() {
               />
             </div>
             <div className="detail-panel">
-              <ContactDetail contact={selectedContact} />
+              <ContactDetail
+                contact={selectedContact}
+                setCurrentPage={setCurrentPage}
+                setSelectedContact={setSelectedContact}
+              />
             </div>
           </div>
         )}

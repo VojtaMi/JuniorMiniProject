@@ -1,11 +1,19 @@
 import type { FC } from "react";
-import type { Contact } from "../types/contact";
+import type { Contact, Page } from "../types/contact";
+
+
 
 interface ContactDetailProps {
   contact: Contact | null;
+  setCurrentPage: React.Dispatch<React.SetStateAction<Page>>;
+  setSelectedContact: React.Dispatch<React.SetStateAction<Contact | null>>;
 }
 
-export const ContactDetail: FC<ContactDetailProps> = ({ contact }) => {
+export const ContactDetail: FC<ContactDetailProps> = ({
+  contact,
+  setCurrentPage,
+  setSelectedContact,
+}) => {
   // TODO: Implementovat detail kontaktu:
   //
   // 1. Zobrazit všechny informace o kontaktu
@@ -32,6 +40,11 @@ export const ContactDetail: FC<ContactDetailProps> = ({ contact }) => {
     );
   }
 
+  function handleUpdate(){
+    setSelectedContact(contact);
+    setCurrentPage('form');
+  }
+
   return (
     <div className="contact-detail-card">
       <h2>Detail kontaktu</h2>
@@ -50,7 +63,7 @@ export const ContactDetail: FC<ContactDetailProps> = ({ contact }) => {
         </tbody>
       </table>
       <div className="contact-detail-buttons">
-        <button className="update-btn" type="button">
+        <button className="update-btn" onClick={handleUpdate} type="button">
           Upravit
         </button>
         <button className="delete-btn" type="button">
