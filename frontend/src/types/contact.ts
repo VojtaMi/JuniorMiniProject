@@ -25,3 +25,5 @@ export interface ContactResponse {
   message: string;
   data: Contact;
 }
+
+export type OnContactSelect = (contact: Contact) => void;

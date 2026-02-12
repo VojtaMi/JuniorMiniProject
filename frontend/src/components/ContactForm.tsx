@@ -51,9 +51,7 @@ export const ContactForm: FC<ContactFormProps> = ({
     return Object.values(inputProps).every(({ isValid }) => isValid);
   }
 
-  function triggerErrors(
-    inputProps: Record<string, UseInputReturn>
-  ): void {
+  function triggerErrors(inputProps: Record<string, UseInputReturn>): void {
     for (const inputProp of Object.values(inputProps)) {
       inputProp.setAsTouched();
     }
