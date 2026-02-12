@@ -47,7 +47,7 @@ export const ContactList: FC<ContactListProps> = ({ onContactSelect }) => {
       {error && <p className="state-error">{error}</p>}
       {isFetching && <p>Načítám data kontaktů.</p>}
       {contacts.length > 0 && (
-        <ul>
+        <ul className="contact-list">
           {contacts.map((contact) => (
             <ContactSelect
               contact={contact}

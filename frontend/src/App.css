@@ -41,8 +41,6 @@ nav button:hover {
   border-radius: 5px;
 }
 
-/* TODO: Junioři přidají vlastní styling podle zadání */
-
 .control-error {
   color: #b00020;
   font-size: 0.9rem;
@@ -87,4 +85,20 @@ label {
 
 .submit-btn:hover {
   background-color: #45a049;
+}
+
+.contact-list {
+  list-style-type: none;
+}
+.contact-list button {
+  width: 50%;
+  font-size: 0.9rem;
+  padding: 0.3rem;
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  background: #f0f0f0;
+  cursor: pointer;
+}
+.contact-list button:hover  {
+  background: #e0e0e0;
 }
