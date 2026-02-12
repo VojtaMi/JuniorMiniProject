@@ -1,46 +1,20 @@
 import type { FC } from "react";
-import { useEffect, useState } from "react";
-import { contactsApi } from "../../api/contactsApi";
 import type { Contact, OnContactSelect } from "../../types/contact";
 import ContactSelect from "./ContactSelect";
 
 interface ContactListProps {
   onContactSelect: OnContactSelect;
+  isFetching: boolean;
+  error: string | null;
+  contacts: Contact[];
 }
 
-export const ContactList: FC<ContactListProps> = ({ onContactSelect }) => {
-  const [contacts, setContacts] = useState<Contact[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const [isFetching, setIsFetching] = useState<boolean>(false);
-
-  useEffect(() => {
-    let isActive = true;
-
-    const loadContacts = async () => {
-      try {
-        setIsFetching(true);
-        const data = await contactsApi.getAllContacts();
-        if (isActive) {
-          setContacts(data);
-        }
-      } catch {
-        if (isActive) {
-          setError("Nepodařilo se načíst data.");
-        }
-      } finally {
-        if (isActive) {
-          setIsFetching(false);
-        }
-      }
-    };
-
-    loadContacts();
-
-    return () => {
-      isActive = false;
-    };
-  }, []);
-
+export const ContactList: FC<ContactListProps> = ({
+  onContactSelect,
+  isFetching,
+  error,
+  contacts,
+}) => {
   return (
     <div>
       <h2>Seznam kontaktů</h2>
