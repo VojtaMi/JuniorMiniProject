@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { ZodType } from "zod";
 import type { Contact } from "../types/contact";
 import type { UseInputReturn } from "../types/input";
@@ -18,6 +18,11 @@ export function useInput(
   const defaultValue = findDefaultValue(prefilledInputs, inputType);
   const [enteredValue, setEnteredValue] = useState(defaultValue);
   const [didEdit, setDidEdit] = useState(false);
+
+  useEffect(() => {
+    setEnteredValue(defaultValue);
+    setDidEdit(false);
+  },[defaultValue])
 
   const parsed = schema.safeParse(enteredValue);
   const valueIsValid = parsed.success;
