@@ -1,20 +1,15 @@
 import { useEffect, useState } from "react";
 import { contactsApi } from "../../api/contactsApi";
-import type { Contact, Page } from "../../types/contact";
+import type { Contact } from "../../types/contact";
+import type { AppStateProps } from "../../types/state";
 import { ContactDetail } from "./ContactDetail";
 import { ContactList } from "./ContactList";
-
-interface ContactViewProps {
-  selectedContact: Contact | null;
-  setSelectedContact: React.Dispatch<React.SetStateAction<Contact | null>>;
-  setCurrentPage: React.Dispatch<React.SetStateAction<Page>>;
-}
 
 export default function ContactView({
   selectedContact,
   setSelectedContact,
   setCurrentPage,
-}: ContactViewProps) {
+}: AppStateProps) {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [isFetching, setIsFetching] = useState<boolean>(false);
@@ -61,10 +56,10 @@ export default function ContactView({
       </div>
       <div className="detail-panel">
         <ContactDetail
-          contact={selectedContact}
+          selectedContact={selectedContact}
+          setContacts={setContacts}
           setCurrentPage={setCurrentPage}
           setSelectedContact={setSelectedContact}
-          setContacts={setContacts}
         />
       </div>
     </div>

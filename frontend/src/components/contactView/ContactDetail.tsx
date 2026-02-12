@@ -1,18 +1,15 @@
 import type { FC } from "react";
-import type { Contact, Page } from "../../types/contact";
+import type { Contact } from "../../types/contact";
+import type { AppStateProps } from "../../types/state";
 
-interface ContactDetailProps {
-  contact: Contact | null;
-  setCurrentPage: React.Dispatch<React.SetStateAction<Page>>;
-  setSelectedContact: React.Dispatch<React.SetStateAction<Contact | null>>;
+interface ContactDetailProps extends Pick<AppStateProps, "selectedContact" | "setCurrentPage" | "setSelectedContact"> {
   setContacts: React.Dispatch<React.SetStateAction<Contact[]>>;
 }
-
 export const ContactDetail: FC<ContactDetailProps> = ({
-  contact,
+  selectedContact,
   setCurrentPage,
   setSelectedContact,
-  setContacts
+  setContacts,
 }) => {
   // TODO: Implementovat detail kontaktu:
   //
@@ -32,7 +29,7 @@ export const ContactDetail: FC<ContactDetailProps> = ({
   // Bonusový úkol:
   // - Tlačítko "Editovat" které otevře formulář s předvyplněnými daty
 
-  if (!contact) {
+  if (!selectedContact) {
     return (
       <div>
         <p>Vyberte kontakt ze seznamu pro zobrazení detailu</p>
@@ -41,12 +38,12 @@ export const ContactDetail: FC<ContactDetailProps> = ({
   }
 
   function handleUpdate() {
-    setSelectedContact(contact);
+    setSelectedContact(selectedContact);
     setCurrentPage("form");
   }
 
   function handleDelete() {
-    setContacts((prev => (prev.filter((c) => c._id !== contact?._id))));
+    setContacts((prev) => prev.filter((c) => c._id !== selectedContact?._id));
     setSelectedContact(null);
     // call API delete
     // if error, rollback (restore DOM)
@@ -60,12 +57,12 @@ export const ContactDetail: FC<ContactDetailProps> = ({
           <tr>
             <td>Vybraný kontakt:</td>
             <td>
-              {contact.firstName} {contact.lastName}
+              {selectedContact.firstName} {selectedContact.lastName}
             </td>
           </tr>
           <tr>
             <td>E-mail:</td>
-            <td>{contact.email}</td>
+            <td>{selectedContact.email}</td>
           </tr>
         </tbody>
       </table>
