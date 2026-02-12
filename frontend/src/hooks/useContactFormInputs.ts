@@ -2,7 +2,7 @@ import type { Contact } from "../types/contact";
 import { formSchema } from "../utils/validators";
 import { useInput } from "./useInput";
 
-export function useContactFormInputs(initialData: Contact | undefined) {
+export function useContactFormInputs(initialData: Contact | null) {
   const emailProps = useInput(initialData, "email", formSchema.shape.email);
   const firstNameProps = useInput(
     initialData,

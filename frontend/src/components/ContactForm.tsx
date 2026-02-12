@@ -6,7 +6,7 @@ import FormInput from "./FormInput";
 
 interface ContactFormProps {
   onSubmit: (contact: Omit<Contact, "_id" | "create_date">) => void;
-  initialData?: Contact;
+  initialData: Contact | null;
 }
 
 export const ContactForm: FC<ContactFormProps> = ({

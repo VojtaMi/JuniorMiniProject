@@ -4,14 +4,14 @@ import type { Contact } from "../types/contact";
 import type { UseInputReturn } from "../types/input";
 
 function findDefaultValue(
-  prefilledInputs: Contact | undefined,
+  prefilledInputs: Contact | null,
   inputType: keyof Contact
 ) {
   return prefilledInputs?.[inputType]?.toString() ?? "";
 }
 
 export function useInput(
-  prefilledInputs: Contact | undefined,
+  prefilledInputs: Contact | null,
   inputType: keyof Contact,
   schema: ZodType
 ): UseInputReturn {

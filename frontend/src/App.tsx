@@ -38,6 +38,7 @@ function App() {
             onSubmit={(contact) => {
               console.log("TODO: Implementovat vytvoření kontaktu", contact);
             }}
+            initialData={selectedContact}
           />
         ) : (
           <div className="list-view">
