@@ -2,7 +2,7 @@ import type { FC } from "react";
 import type { Contact } from "../../types/contact";
 import type { AppStateProps } from "../../types/state";
 
-interface ContactDetailProps extends Pick<AppStateProps, "selectedContact" | "setCurrentPage" | "setSelectedContact"> {
+interface ContactDetailProps extends AppStateProps {
   setContacts: React.Dispatch<React.SetStateAction<Contact[]>>;
 }
 export const ContactDetail: FC<ContactDetailProps> = ({
