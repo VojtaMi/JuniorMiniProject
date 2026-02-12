@@ -102,3 +102,44 @@ label {
 .contact-list button:hover  {
   background: #e0e0e0;
 }
+
+.contact-detail td:first-child {
+  padding-right: 1.5rem; 
+}
+
+.delete-btn {
+  padding: 5px 10px;
+  border: 1px solid #d00;
+  background: #fee;
+  color: #d00;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.delete-btn:hover {
+  background: #fdd;
+}
+.update-btn {
+  padding: 5px 10px;
+  border: 1px solid #007bff;
+  background: #eef;
+  color: #007bff;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.update-btn:hover {
+  background: #ddf;
+}
+
+.contact-detail-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%; 
+}
+
+.contact-detail-buttons {
+  margin-top: auto;
+  display: flex;
+  gap: 1rem;
+}

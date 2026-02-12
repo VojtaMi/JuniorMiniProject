@@ -33,12 +33,30 @@ export const ContactDetail: FC<ContactDetailProps> = ({ contact }) => {
   }
 
   return (
-    <div>
+    <div className="contact-detail-card">
       <h2>Detail kontaktu</h2>
-      <p>TODO: Implementovat zobrazení detailu</p>
-      <p>
-        Vybraný kontakt: {contact.firstName} {contact.lastName}
-      </p>
+      <table className="contact-detail">
+        <tbody>
+          <tr>
+            <td>Vybraný kontakt:</td>
+            <td>
+              {contact.firstName} {contact.lastName}
+            </td>
+          </tr>
+          <tr>
+            <td>E-mail:</td>
+            <td>{contact.email}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div className="contact-detail-buttons">
+        <button className="update-btn" type="button">
+          Upravit
+        </button>
+        <button className="delete-btn" type="button">
+          Smazat
+        </button>
+      </div>
     </div>
   );
 };
