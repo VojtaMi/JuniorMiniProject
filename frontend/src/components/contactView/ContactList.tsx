@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { useEffect, useState } from "react";
-import { contactsApi } from "../api/contactsApi";
-import type { Contact, OnContactSelect } from "../types/contact";
+import { contactsApi } from "../../api/contactsApi";
+import type { Contact, OnContactSelect } from "../../types/contact";
 import ContactSelect from "./ContactSelect";
 
 interface ContactListProps {

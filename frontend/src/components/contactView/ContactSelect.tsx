@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import type { Contact, OnContactSelect } from "../types/contact";
+import type { Contact, OnContactSelect } from "../../types/contact";
 
 interface ContactSelectProps {
   contact: Contact;

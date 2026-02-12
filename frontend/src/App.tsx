@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { ContactDetail } from "./components/ContactDetail";
 import { ContactForm } from "./components/ContactForm";
-import { ContactList } from "./components/ContactList";
+import ContactView from "./components/contactView/ContactView";
 import type { Contact, Page } from "./types/contact";
 import "./App.css";
 
@@ -45,22 +44,11 @@ function App() {
             }}
           />
         ) : (
-          <div className="list-view">
-            <div className="list-panel">
-              <ContactList
-                onContactSelect={(contact) => {
-                  setSelectedContact(contact);
-                }}
-              />
-            </div>
-            <div className="detail-panel">
-              <ContactDetail
-                contact={selectedContact}
-                setCurrentPage={setCurrentPage}
-                setSelectedContact={setSelectedContact}
-              />
-            </div>
-          </div>
+          <ContactView
+            selectedContact={selectedContact}
+            setCurrentPage={setCurrentPage}
+            setSelectedContact={setSelectedContact}
+          />
         )}
       </main>
     </div>

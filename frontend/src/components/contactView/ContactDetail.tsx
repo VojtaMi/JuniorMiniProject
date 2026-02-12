@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import type { Contact, Page } from "../types/contact";
+import type { Contact, Page } from "../../types/contact";
 
 interface ContactDetailProps {
   contact: Contact | null;
@@ -43,6 +43,13 @@ export const ContactDetail: FC<ContactDetailProps> = ({
     setCurrentPage("form");
   }
 
+  function handleDelete() {
+    // remove contact from DOM - from contact list
+    // setSelectedContact(null);
+    // call API delete
+    // if error, rollback (restore DOM)
+  }
+
   return (
     <div className="contact-detail-card">
       <h2>Detail kontaktu</h2>
@@ -64,7 +71,7 @@ export const ContactDetail: FC<ContactDetailProps> = ({
         <button className="update-btn" onClick={handleUpdate} type="button">
           Upravit
         </button>
-        <button className="delete-btn" type="button">
+        <button className="delete-btn" onClick={handleDelete} type="button">
           Smazat
         </button>
       </div>
