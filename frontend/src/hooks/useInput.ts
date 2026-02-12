@@ -21,10 +21,10 @@ export function useInput(
 
   const parsed = schema.safeParse(enteredValue);
   const valueIsValid = parsed.success;
-  const latentErrorMsg = valueIsValid
+  const errorMsg = valueIsValid
     ? ""
     : (parsed.error.issues[0]?.message ?? "Špatný vstup");
-  const displayedErrorMessage = didEdit && !valueIsValid ? latentErrorMsg : "";
+  const displayedErrorMessage = didEdit && !valueIsValid ? errorMsg : "";
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     setEnteredValue(event.target.value);

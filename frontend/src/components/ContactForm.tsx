@@ -51,7 +51,7 @@ export const ContactForm: FC<ContactFormProps> = ({
     return Object.values(inputProps).every(({ isValid }) => isValid);
   }
 
-  function displayLatentErrors(
+  function triggerErrors(
     inputProps: Record<string, UseInputReturn>
   ): void {
     for (const inputProp of Object.values(inputProps)) {
@@ -70,7 +70,7 @@ export const ContactForm: FC<ContactFormProps> = ({
       };
       onSubmit(formContact);
     } else {
-      displayLatentErrors(contactInputProps);
+      triggerErrors(contactInputProps);
     }
   }
 
