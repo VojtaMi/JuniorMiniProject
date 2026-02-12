@@ -64,6 +64,7 @@ export default function ContactView({
           contact={selectedContact}
           setCurrentPage={setCurrentPage}
           setSelectedContact={setSelectedContact}
+          setContacts={setContacts}
         />
       </div>
     </div>

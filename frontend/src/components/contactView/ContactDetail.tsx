@@ -5,12 +5,14 @@ interface ContactDetailProps {
   contact: Contact | null;
   setCurrentPage: React.Dispatch<React.SetStateAction<Page>>;
   setSelectedContact: React.Dispatch<React.SetStateAction<Contact | null>>;
+  setContacts: React.Dispatch<React.SetStateAction<Contact[]>>;
 }
 
 export const ContactDetail: FC<ContactDetailProps> = ({
   contact,
   setCurrentPage,
   setSelectedContact,
+  setContacts
 }) => {
   // TODO: Implementovat detail kontaktu:
   //
@@ -44,8 +46,8 @@ export const ContactDetail: FC<ContactDetailProps> = ({
   }
 
   function handleDelete() {
-    // remove contact from DOM - from contact list
-    // setSelectedContact(null);
+    setContacts((prev => (prev.filter((c) => c._id !== contact?._id))));
+    setSelectedContact(null);
     // call API delete
     // if error, rollback (restore DOM)
   }
