@@ -21,7 +21,13 @@ function App() {
       <header>
         <h1>Správa kontaktů</h1>
         <nav>
-          <button onClick={() => {setCurrentPage("form"); setSelectedContact(null)}} type="button">
+          <button
+            onClick={() => {
+              setCurrentPage("form");
+              setSelectedContact(null);
+            }}
+            type="button"
+          >
             Vytvořit kontakt
           </button>
           <button onClick={() => setCurrentPage("list")} type="button">
@@ -33,10 +39,10 @@ function App() {
       <main>
         {currentPage === "form" ? (
           <ContactForm
+            initialData={selectedContact}
             onSubmit={(contact) => {
               console.log("TODO: Implementovat vytvoření kontaktu", contact);
             }}
-            initialData={selectedContact}
           />
         ) : (
           <div className="list-view">

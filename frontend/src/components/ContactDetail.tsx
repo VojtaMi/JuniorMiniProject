@@ -1,8 +1,6 @@
 import type { FC } from "react";
 import type { Contact, Page } from "../types/contact";
 
-
-
 interface ContactDetailProps {
   contact: Contact | null;
   setCurrentPage: React.Dispatch<React.SetStateAction<Page>>;
@@ -40,9 +38,9 @@ export const ContactDetail: FC<ContactDetailProps> = ({
     );
   }
 
-  function handleUpdate(){
+  function handleUpdate() {
     setSelectedContact(contact);
-    setCurrentPage('form');
+    setCurrentPage("form");
   }
 
   return (

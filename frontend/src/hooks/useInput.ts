@@ -22,7 +22,7 @@ export function useInput(
   useEffect(() => {
     setEnteredValue(defaultValue);
     setDidEdit(false);
-  },[defaultValue])
+  }, [defaultValue]);
 
   const parsed = schema.safeParse(enteredValue);
   const valueIsValid = parsed.success;

@@ -99,12 +99,12 @@ label {
   background: #f0f0f0;
   cursor: pointer;
 }
-.contact-list button:hover  {
+.contact-list button:hover {
   background: #e0e0e0;
 }
 
 .contact-detail td:first-child {
-  padding-right: 1.5rem; 
+  padding-right: 1.5rem;
 }
 
 .delete-btn {
@@ -135,7 +135,7 @@ label {
 .contact-detail-card {
   display: flex;
   flex-direction: column;
-  min-height: 100%; 
+  min-height: 100%;
 }
 
 .contact-detail-buttons {
