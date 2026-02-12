@@ -49,6 +49,12 @@ nav button:hover {
   margin-top: 4px;
 }
 
+.state-error {
+  color: #b00020;
+  font-size: 1.1rem;
+  margin-top: 4px;
+}
+
 form {
   border-radius: 5px;
   background-color: #f2f2f2;

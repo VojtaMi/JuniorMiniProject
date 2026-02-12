@@ -48,7 +48,7 @@ useEffect(() => {
       }
     } catch {
       if (isActive) {
-        setError("Failed to load contacts");
+        setError("Nepodařilo se načíst data.");
       }
     } finally {
       if (isActive) {
@@ -67,7 +67,7 @@ useEffect(() => {
   return (
     <div>
       <h2>Seznam kontaktů</h2>
-      {error && <p>{error}</p>}
+      {error && <p className="state-error">{error}</p>}
       {isFetching && <p>Načítám data kontaktů.</p>}
       <ul>
         {contacts.map((contact) => (
