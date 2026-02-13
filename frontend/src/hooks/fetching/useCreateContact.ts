@@ -6,7 +6,7 @@ interface UseCreateContactResult {
   createContact: (contactData: Contact) => Promise<Contact | null>;
   error: string | null;
   isFetching: boolean;
-};
+}
 
 export function useCreateContact(): UseCreateContactResult {
   const [error, setError] = useState<string | null>(null);

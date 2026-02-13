@@ -6,7 +6,7 @@ interface UseUpdateContactResult {
   updateContact: (id: string, contactData: Contact) => Promise<Contact | null>;
   error: string | null;
   isFetching: boolean;
-};
+}
 
 export function useUpdateContact(): UseUpdateContactResult {
   const [error, setError] = useState<string | null>(null);

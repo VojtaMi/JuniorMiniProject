@@ -1,10 +1,10 @@
 import type { FC } from "react";
+import { useCreateContact } from "../hooks/fetching/useCreateContact";
+import { useUpdateContact } from "../hooks/fetching/useUpdateContact";
 import { useContactFormInputs } from "../hooks/useContactFormInputs";
 import type { Contact } from "../types/contact";
 import type { UseInputReturn } from "../types/input";
 import FormInput from "./FormInput";
-import { useCreateContact } from "../hooks/fetching/useCreateContact";
-import { useUpdateContact } from "../hooks/fetching/useUpdateContact";
 
 interface ContactFormProps {
   onSubmit: (contact: Contact) => void;

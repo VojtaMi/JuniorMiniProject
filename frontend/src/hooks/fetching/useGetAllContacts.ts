@@ -8,7 +8,7 @@ interface UseGetAllContactsResult {
   setContacts: Dispatch<SetStateAction<Contact[]>>;
   error: string | null;
   isFetching: boolean;
-};
+}
 
 export function useGetAllContacts(): UseGetAllContactsResult {
   const [contacts, setContacts] = useState<Contact[]>([]);

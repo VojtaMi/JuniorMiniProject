@@ -40,9 +40,9 @@ function App() {
             initialData={selectedContact}
             onSubmit={(contact) => {
               setSelectedContact(contact);
-              setCurrentPage("list")
+              setCurrentPage("list");
             }}
-          /> 
+          />
         ) : (
           <ContactView
             selectedContact={selectedContact}
