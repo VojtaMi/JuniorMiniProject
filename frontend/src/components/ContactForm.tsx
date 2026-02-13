@@ -3,6 +3,8 @@ import { useContactFormInputs } from "../hooks/useContactFormInputs";
 import type { Contact } from "../types/contact";
 import type { UseInputReturn } from "../types/input";
 import FormInput from "./FormInput";
+import { useCreateContact } from "../hooks/fetching/useCreateContact";
+import { useUpdateContact } from "../hooks/fetching/useUpdateContact";
 
 interface ContactFormProps {
   onSubmit: (contact: Omit<Contact, "_id" | "create_date">) => void;
@@ -47,6 +49,9 @@ export const ContactForm: FC<ContactFormProps> = ({
   const contactInputProps = useContactFormInputs(initialData);
   const { firstNameProps, lastNameProps, emailProps } = contactInputProps;
 
+  const {updateContact} = useUpdateContact();
+  const {createContact} = useCreateContact();
+
   function allInputsValid(inputProps: Record<string, UseInputReturn>): boolean {
     return Object.values(inputProps).every(({ isValid }) => isValid);
   }
@@ -66,6 +71,9 @@ export const ContactForm: FC<ContactFormProps> = ({
         lastName: lastNameProps.value,
         email: emailProps.value,
       };
+
+      initialData?._id ? updateContact(initialData._id, formContact) : createContact(formContact)
+   
       onSubmit(formContact);
     } else {
       triggerErrors(contactInputProps);

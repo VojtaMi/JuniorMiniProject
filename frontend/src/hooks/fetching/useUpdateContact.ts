@@ -2,34 +2,35 @@ import { useState } from "react";
 import { contactsApi } from "../../api/contactsApi";
 import type { Contact } from "../../types/contact";
 
-interface UseCreateContactResult {
-  createContact: (contactData: Contact) => Promise<Contact | null>;
+interface UseUpdateContactResult {
+  updateContact: (id: string, contactData: Contact) => Promise<Contact | null>;
   fetchedContact: Contact | null;
   error: string | null;
   isFetching: boolean;
 };
 
-export function useCreateContact(): UseCreateContactResult {
+export function useUpdateContact(): UseUpdateContactResult {
   const [fetchedContact, setFetchedContact] = useState<Contact | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isFetching, setIsFetching] = useState<boolean>(false);
 
-  const createContact = async (
+  const updateContact = async (
+    id: string,
     contactData: Contact
   ): Promise<Contact | null> => {
     try {
       setIsFetching(true);
       setError(null);
-      const data = await contactsApi.createContact(contactData);
+      const data = await contactsApi.updateContact(id, contactData);
       setFetchedContact(data);
       return data;
     } catch {
-      setError("Nepodařilo se vytvořit kontakt.");
+      setError("Nepodařilo se upravit kontakt.");
       return null;
     } finally {
       setIsFetching(false);
     }
   };
 
-  return { createContact, fetchedContact, error, isFetching };
+  return { updateContact, fetchedContact, error, isFetching };
 }

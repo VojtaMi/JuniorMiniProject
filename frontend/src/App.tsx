@@ -14,8 +14,6 @@ function App() {
   //
   // Tato kostra ukazuje základní strukturu aplikace.
   // Junioři mohou implementovat detaily podle zadání.
-
-
   return (
     <div className="app">
       <header>
@@ -44,7 +42,7 @@ function App() {
               setSelectedContact(contact);
               setCurrentPage("list")
             }}
-          />
+          /> 
         ) : (
           <ContactView
             selectedContact={selectedContact}
