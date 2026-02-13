@@ -15,6 +15,7 @@ function App() {
   // Tato kostra ukazuje základní strukturu aplikace.
   // Junioři mohou implementovat detaily podle zadání.
 
+
   return (
     <div className="app">
       <header>
@@ -40,7 +41,8 @@ function App() {
           <ContactForm
             initialData={selectedContact}
             onSubmit={(contact) => {
-              console.log("TODO: Implementovat vytvoření kontaktu", contact);
+              setSelectedContact(contact);
+              setCurrentPage("list")
             }}
           />
         ) : (

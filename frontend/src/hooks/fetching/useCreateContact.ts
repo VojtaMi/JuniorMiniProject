@@ -8,7 +8,7 @@ interface UseCreateContactsResult {
   isFetching: boolean;
 }
 
-export function useCreateContacts(
+export function useCreateContact(
   contactData: Contact
 ): UseCreateContactsResult {
   const [fetchedContact, setFetchedContact] = useState<Contact>({firstName:'', lastName:'', email:''});
