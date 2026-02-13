@@ -7,7 +7,7 @@ import { useCreateContact } from "../hooks/fetching/useCreateContact";
 import { useUpdateContact } from "../hooks/fetching/useUpdateContact";
 
 interface ContactFormProps {
-  onSubmit: (contact: Omit<Contact, "_id" | "create_date">) => void;
+  onSubmit: (contact: Contact) => void;
   initialData: Contact | null;
 }
 
@@ -49,8 +49,12 @@ export const ContactForm: FC<ContactFormProps> = ({
   const contactInputProps = useContactFormInputs(initialData);
   const { firstNameProps, lastNameProps, emailProps } = contactInputProps;
 
-  const {updateContact} = useUpdateContact();
-  const {createContact} = useCreateContact();
+  const updating = initialData?._id;
+
+  const create = useCreateContact();
+  const update = useUpdateContact();
+
+  const { error, isFetching } = updating ? update : create;
 
   function allInputsValid(inputProps: Record<string, UseInputReturn>): boolean {
     return Object.values(inputProps).every(({ isValid }) => isValid);
@@ -62,7 +66,16 @@ export const ContactForm: FC<ContactFormProps> = ({
     }
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
+  async function fetchContact(formContact: Contact) {
+    if (initialData?._id) {
+      return await update.updateContact(initialData._id, formContact);
+    }
+    return await create.createContact(formContact);
+  }
+
+  async function handleSubmit(
+    event: React.FormEvent<HTMLFormElement>
+  ): Promise<void> {
     event.preventDefault();
 
     if (allInputsValid(contactInputProps)) {
@@ -72,9 +85,11 @@ export const ContactForm: FC<ContactFormProps> = ({
         email: emailProps.value,
       };
 
-      initialData?._id ? updateContact(initialData._id, formContact) : createContact(formContact)
-   
-      onSubmit(formContact);
+      const fetchedContact = await fetchContact(formContact);
+
+      if (fetchedContact) {
+        onSubmit(fetchedContact);
+      }
     } else {
       triggerErrors(contactInputProps);
     }
@@ -114,6 +129,8 @@ export const ContactForm: FC<ContactFormProps> = ({
       <button className="submit-btn" type="submit">
         {initialData ? "Potvrdit změny" : "Přidat kontakt"}
       </button>
+      {error && <p className="state-error">{error}</p>}
+      {isFetching && <p>Odesílám data</p>}
     </form>
   );
 };

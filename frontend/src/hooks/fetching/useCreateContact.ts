@@ -4,13 +4,11 @@ import type { Contact } from "../../types/contact";
 
 interface UseCreateContactResult {
   createContact: (contactData: Contact) => Promise<Contact | null>;
-  fetchedContact: Contact | null;
   error: string | null;
   isFetching: boolean;
 };
 
 export function useCreateContact(): UseCreateContactResult {
-  const [fetchedContact, setFetchedContact] = useState<Contact | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isFetching, setIsFetching] = useState<boolean>(false);
 
@@ -21,7 +19,6 @@ export function useCreateContact(): UseCreateContactResult {
       setIsFetching(true);
       setError(null);
       const data = await contactsApi.createContact(contactData);
-      setFetchedContact(data);
       return data;
     } catch {
       setError("Nepodařilo se vytvořit kontakt.");
@@ -31,5 +28,5 @@ export function useCreateContact(): UseCreateContactResult {
     }
   };
 
-  return { createContact, fetchedContact, error, isFetching };
+  return { createContact, error, isFetching };
 }
